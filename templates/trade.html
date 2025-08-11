@@ -6,7 +6,19 @@
 </head>
 
 <body>
-  <p>tähän vaihtopyynnöt ja linkki/lomake, jossa
-    sen voi tehdä itse
-  </p>
+  <h1>Vaihtokaupat</h1>
+  <br />
+  <h2>Uusi ehdotus</h2>
+  <form action="/create_ask" method="post">
+    <p>
+      Otsikko: <br />
+      <input type="text" name="title" />
+    </p>
+    <p>
+        Kuvaus: <br />
+        <textarea rows="8" cols="60"></textarea>
+    </p>
+    <input type="submit" value="Luo ehdotus" />
+  </form>
+</body>
 </html>
