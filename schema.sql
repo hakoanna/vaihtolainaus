@@ -7,6 +7,7 @@ CREATE TABLE users (
 CREATE TABLE asks (
     id INTEGER PRIMARY KEY,
     title TEXT,
+    content TEXT,
     user_id INTEGER REFERENCES users
 );
 
