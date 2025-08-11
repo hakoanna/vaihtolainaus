@@ -42,7 +42,7 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        
+
         sql = "SELECT password_hash FROM users WHERE username = ?"
         password_hash = db.query(sql, [username])[0][0]
 
@@ -56,3 +56,11 @@ def login():
 def logout():
     del session["username"]
     return redirect("/")
+
+@app.route("/trade")
+def trade():
+    return render_template("trade.html")
+
+@app.route("/borrow")
+def borrow():
+    return render_template("borrow.html")

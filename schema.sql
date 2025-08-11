@@ -4,3 +4,16 @@ CREATE TABLE users (
     password_hash TEXT
 );
 
+CREATE TABLE asks (
+    id INTEGER PRIMARY KEY,
+    title TEXT,
+    user_id INTEGER REFERENCES users
+);
+
+CREATE TABLE replies (
+    id INTEGER PRIMARY KEY,
+    content TEXT,
+    sent_at TEXT,
+    user_id INTEGER REFERENCES users,
+    ask_id INTEGER REFERENCES asks
+);
