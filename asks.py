@@ -11,9 +11,9 @@ def get_asks():
 
 def get_ask(ask_id):
     sql = """SELECT asks.title, 
-                    asks.content, 
-                    users.username 
-                FROM asks, users 
-                WHERE asks.user_id = users.id AND 
+                    asks.content,
+                    users.username
+                FROM asks, users
+                WHERE asks.user_id = users.id AND
                     asks.id = ?"""
     return db.query(sql, [ask_id])[0]
