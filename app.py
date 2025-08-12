@@ -64,7 +64,13 @@ def logout():
 
 @app.route("/trade")
 def trade():
-    return render_template("trade.html")
+    all_asks = asks.get_asks()
+    return render_template("trade.html", asks=all_asks)
+
+@app.route("/ask/<int:ask_id>")
+def show_ask(ask_id):
+    ask = asks.get_ask(ask_id)
+    return render_template("show_ask.html", ask=ask)
 
 @app.route("/create_ask", methods=["POST"])
 def create_ask():

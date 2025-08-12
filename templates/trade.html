@@ -7,6 +7,12 @@
 
 <body>
   <h1>Vaihtokaupat</h1>
+  <h2>Ehdotukset</h2>
+  <u>
+    {% for ask in asks %}
+    <li><a href="/ask/{{ ask.id }}">{{ ask.title }}</a></li>
+    {% endfor %}
+  </u>
   <br />
   <h2>Uusi ehdotus</h2>
   <form action="/create_ask" method="post">
