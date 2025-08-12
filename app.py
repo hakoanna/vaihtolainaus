@@ -4,6 +4,7 @@ from flask import redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash 
 import config
 import db
+import asks
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
@@ -71,9 +72,7 @@ def create_ask():
     content = request.form["content"]
     user_id = session["user_id"]
 
-    sql = """INSERT INTO asks (title, content, user_id) 
-            VALUES (?, ?, ?)"""
-    db.execute(sql, [title, content, user_id])
+    asks.add_ask(title, content, user_id)
 
     return redirect("/")
 
