@@ -13,6 +13,11 @@
   <p>
     Ehdottaja: {{ ask.username }}
   </p>
+    {% if ask.user_id == session.user_id %}
+  <p>
+    <a href="/edit/{{ ask.id }}">Muokkaa</a> |
+  </p>
+  {% endif %}
   <p>
     <a href="/trade">Takaisin</a>
   </p>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Ehdotuksen muokkaus</title>
+</head>
+
+<body>
+  <h1>Ehdotuksen muokkaus</h1>
+
+  <form action="/edit/{{ ask.id }}" method="post">
+    <p>
+      Ehdotus:<br />
+      <textarea name="content" rows="5" cols="40">{{ ask.content }}</textarea>
+    </p>
+    <input type="submit" value="Lähetä" />
+  </form>
+</body>
+
+</html>
