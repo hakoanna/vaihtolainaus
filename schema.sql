@@ -8,6 +8,7 @@ CREATE TABLE asks (
     id INTEGER PRIMARY KEY,
     title TEXT,
     content TEXT,
+    sent_at TEXT,
     user_id INTEGER REFERENCES users
 );
 
