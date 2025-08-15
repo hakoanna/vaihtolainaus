@@ -5,6 +5,10 @@ def add_ask(title, content, user_id):
             VALUES (?, ?, datetime('now'), ?)"""
     db.execute(sql, [title, content, user_id])
 
+def get_asks_info():
+    sql = "SELECT COUNT(a.id) total, MAX(a.sent_at) last FROM asks a"
+    return db.query(sql)[0]
+
 def get_asks():
     sql = """SELECT a.id,
                     a.title,
