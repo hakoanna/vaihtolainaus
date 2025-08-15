@@ -96,6 +96,19 @@ def edit_ask(ask_id):
         asks.update_ask(ask_id, title, content)
         return redirect("/ask/" + str(ask_id))
 
+@app.route("/remove_ask/<int:ask_id>", methods=["GET", "POST"])
+def remove_ask(ask_id):
+    ask = asks.get_ask(ask_id)
+
+    if request.method == "GET":
+        return render_template("remove_ask.html", ask=ask)
+
+    if request.method == "POST":
+        ask_id = request.form["ask_id"]
+        if "continue" in request.form:
+            asks.remove_ask(ask_id)
+        return redirect("/trade")
+
 
 @app.route("/borrow")
 def borrow():

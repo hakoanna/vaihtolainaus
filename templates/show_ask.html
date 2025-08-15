@@ -16,6 +16,7 @@
     {% if ask.user_id == session.user_id %}
   <p>
     <a href="/edit_ask/{{ ask.id }}">Muokkaa</a> |
+    <a href="/remove_ask/{{ ask.id }}">Poista</a> 
   </p>
   {% endif %}
   <p>

@@ -18,7 +18,7 @@ def get_asks():
 
 def get_ask(ask_id):
     sql = """SELECT asks.id,
-                    asks.title, 
+                    asks.title,
                     asks.content,
                     asks.sent_at,
                     asks.user_id,
@@ -31,7 +31,12 @@ def get_ask(ask_id):
 
 def update_ask(ask_id, title, content):
     sql = """UPDATE asks SET
-                            title = ?, 
+                            title = ?,
                             content = ?
                         WHERE id = ?"""
     db.execute(sql, [title, content, ask_id])
+
+def remove_ask(ask_id):
+    sql = "DELETE FROM asks WHERE id = ?"
+    db.execute(sql, [ask_id])
+
