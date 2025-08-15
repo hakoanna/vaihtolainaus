@@ -8,11 +8,16 @@
 <body>
   <h1>Ehdotuksen muokkaus</h1>
 
-  <form action="/edit/{{ ask.id }}" method="post">
+  <form action="/edit_ask/{{ ask.id }}" method="post">
+    <p>
+      Otsikko:<br />
+      <input type="text" name="title" value="{{ ask.title }}"/>
+    </p>
     <p>
       Ehdotus:<br />
       <textarea name="content" rows="5" cols="40">{{ ask.content }}</textarea>
     </p>
+    <input type="hidden" name="ask_id" value="{{ ask.id }}"/>
     <input type="submit" value="Lähetä" />
   </form>
 </body>

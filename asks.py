@@ -17,16 +17,21 @@ def get_asks():
     return db.query(sql)
 
 def get_ask(ask_id):
-    sql = """SELECT asks.title, 
+    sql = """SELECT asks.id,
+                    asks.title, 
                     asks.content,
                     asks.sent_at,
                     asks.user_id,
+                    users.id user_id,
                     users.username
                 FROM asks, users
                 WHERE asks.user_id = users.id AND
                     asks.id = ?"""
     return db.query(sql, [ask_id])[0]
 
-def update_ask(ask_id, content):
-    sql = "UPDATE asks SET content = ? WHERE id = ?"
-    db.execute(sql, [content, ask_id])
+def update_ask(ask_id, title, content):
+    sql = """UPDATE asks SET
+                            title = ?, 
+                            content = ?
+                        WHERE id = ?"""
+    db.execute(sql, [title, content, ask_id])

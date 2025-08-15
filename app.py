@@ -82,17 +82,19 @@ def create_ask():
 
     return redirect("/")
 
-@app.route("/edit/<int:ask_id>", methods=["GET", "POST"])
+@app.route("/edit_ask/<int:ask_id>", methods=["GET", "POST"])
 def edit_ask(ask_id):
     ask = asks.get_ask(ask_id)
 
     if request.method == "GET":
-        return render_template("edit.html", ask=ask)
+        return render_template("edit_ask.html", ask=ask)
 
     if request.method == "POST":
+        ask_id = request.form["ask_id"]
+        title = request.form["title"]
         content = request.form["content"]
-        asks.update_ask(ask["id"], content)
-        return redirect("/trade/" + str(ask["ask_id"]))
+        asks.update_ask(ask_id, title, content)
+        return redirect("/ask/" + str(ask_id))
 
 
 @app.route("/borrow")
