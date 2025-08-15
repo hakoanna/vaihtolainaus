@@ -45,3 +45,9 @@ def remove_ask(ask_id):
     sql = "DELETE FROM asks WHERE id = ?"
     db.execute(sql, [ask_id])
 
+def search_asks(query):
+    sql = """SELECT id, title
+            FROM asks
+            WHERE title LIKE ? OR content LIKE ?
+            ORDER BY id DESC"""
+    return db.query(sql, ["%" + query + "%", "%" + query + "%"])

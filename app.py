@@ -14,6 +14,16 @@ def index():
     info = asks.get_asks_info()
     return render_template("index.html", info=info)
 
+@app.route("/search")
+def search():
+    query = request.args.get("query")
+    if query:
+        results = asks.search_asks(query)
+    else:
+        query = ""
+        results = ""
+    return render_template("search.html", query=query, results=results)
+
 @app.route("/register")
 def register():
     return render_template("register.html")

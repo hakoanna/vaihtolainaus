@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Haku</title>
+</head>
+
+<body>
+  <h1>Haku</h1>
+
+  <form action="/search" method="get"> 
+    <p>
+        Hakusana: <input type="text" name="query" value="{{ query }}">
+    </p>
+    <input type="submit" value="Lähetä">
+  </form>
+
+  {% if query %}
+  <h2>Tulokset</h2>
+
+  {% for ask in results %}
+  <a href="/ask/{{ ask.id }}">{{ ask.title }}</a>
+  {% endfor %}
+
+  {% endif %}
+  <hr />
+  <p>
+    <a href="/">Etusivulle</a>
+  </p>
+</body>
+
+</html>
