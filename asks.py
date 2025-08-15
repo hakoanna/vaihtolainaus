@@ -6,27 +6,28 @@ def add_ask(title, content, user_id):
     db.execute(sql, [title, content, user_id])
 
 def get_asks():
-    sql = """SELECT asks.id,
-                asks.title,
-                asks.user_id,
-                asks.sent_at,
-                users.username
-            FROM asks, users
-            WHERE asks.user_id = users.id
-            ORDER BY asks.id DESC"""
+    sql = """SELECT a.id,
+                    a.title,
+                    a.user_id,
+                    a.sent_at,
+                    u.username
+            FROM asks a, users u
+            WHERE a.user_id = u.id
+            GROUP BY a.id
+            ORDER BY a.id DESC"""
     return db.query(sql)
 
 def get_ask(ask_id):
-    sql = """SELECT asks.id,
-                    asks.title,
-                    asks.content,
-                    asks.sent_at,
-                    asks.user_id,
-                    users.id user_id,
-                    users.username
-                FROM asks, users
-                WHERE asks.user_id = users.id AND
-                    asks.id = ?"""
+    sql = """SELECT a.id,
+                    a.title,
+                    a.content,
+                    a.sent_at,
+                    a.user_id,
+                    u.id user_id,
+                    u.username
+                FROM asks a, users u
+                WHERE a.user_id = u.id AND
+                    a.id = ?"""
     return db.query(sql, [ask_id])[0]
 
 def update_ask(ask_id, title, content):

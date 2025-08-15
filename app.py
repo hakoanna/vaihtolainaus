@@ -11,7 +11,8 @@ app.secret_key = config.secret_key
 
 @app.route("/")
 def index():
-    return render_template("index.html")
+    all_asks = asks.get_asks()
+    return render_template("index.html", asks=all_asks)
 
 @app.route("/register")
 def register():

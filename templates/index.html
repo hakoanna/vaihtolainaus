@@ -6,18 +6,18 @@
 </head>
 
 <body>
-  <h1>Vaihtolainaus</h1>
+  <h1>Solmi laina- tai vaihtokauppoja täällä näin!</h1>
   
   <p>
     {% if session.user_id %}
-    <a href="/register">Luo tunnus</a>
+    <a href="/register">Luo tunnus</a> |
     <a href="/logout">Kirjaudu ulos</a>
     <hr />
     Tervetuloa {{ session.username }} 
     <br />
     (ID-numero: {{ session.user_id  }})
     {% else %}
-    <a href="/register">Luo tunnus</a>
+    <a href="/register">Luo tunnus</a> |
     <a href="/login">Kirjaudu sisään</a>
     {% endif %}
     <hr />
@@ -26,7 +26,13 @@
   <h2>
     <a href="/trade">Vaihtokaupat</a>
     <br />
-    <a href="/borrow">Lainat</a>
+  </h2>
+  <p>
+    {{ asks.total }} ehdotusta, uusin
+  </p>
+  <hr />
+  <h2>
+    <a href="/borrow">Lainakaupat</a>
   </h2>
 
 </body>
