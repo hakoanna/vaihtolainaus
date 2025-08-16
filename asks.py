@@ -32,7 +32,8 @@ def get_ask(ask_id):
                 FROM asks a, users u
                 WHERE a.user_id = u.id AND
                     a.id = ?"""
-    return db.query(sql, [ask_id])[0]
+    result = db.query(sql, [ask_id])
+    return result[0] if result else None
 
 def update_ask(ask_id, title, content):
     sql = """UPDATE asks SET

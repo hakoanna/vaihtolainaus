@@ -81,6 +81,8 @@ def trade():
 @app.route("/ask/<int:ask_id>")
 def show_ask(ask_id):
     ask = asks.get_ask(ask_id)
+    if not ask:
+        abort(404)
     return render_template("show_ask.html", ask=ask)
 
 @app.route("/create_ask", methods=["POST"])
@@ -96,7 +98,8 @@ def create_ask():
 @app.route("/edit_ask/<int:ask_id>", methods=["GET", "POST"])
 def edit_ask(ask_id):
     ask = asks.get_ask(ask_id)
-    print(ask["user_id"], session["user_id"], "1")
+    if not ask:
+        abort(404)
     if ask["user_id"] != session["user_id"]:
         abort(403)
 
@@ -106,6 +109,8 @@ def edit_ask(ask_id):
     if request.method == "POST":
         ask_id = request.form["ask_id"]
         ask = asks.get_ask(ask_id)
+        if not ask:
+            abort(404)
         if ask["user_id"] != session["user_id"]:
             abort(403)
         title = request.form["title"]
@@ -116,6 +121,8 @@ def edit_ask(ask_id):
 @app.route("/remove_ask/<int:ask_id>", methods=["GET", "POST"])
 def remove_ask(ask_id):
     ask = asks.get_ask(ask_id)
+    if not ask:
+            abort(404)
     if ask["user_id"] != session["user_id"]:
         abort(403)
 
