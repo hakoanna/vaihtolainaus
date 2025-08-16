@@ -125,7 +125,11 @@ def edit_ask(ask_id):
         if ask["user_id"] != session["user_id"]:
             abort(403)
         title = request.form["title"]
+        if not title or len(title) > 50:
+            abort(403)
         content = request.form["content"]
+        if not content or len(content) > 1000:
+            abort(403)
         asks.update_ask(ask_id, title, content)
         return redirect("/ask/" + str(ask_id))
 

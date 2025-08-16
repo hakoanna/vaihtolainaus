@@ -11,11 +11,11 @@
   <form action="/edit_ask/{{ ask.id }}" method="post">
     <p>
       Otsikko:<br />
-      <input type="text" name="title" value="{{ ask.title }}"/>
+      <input type="text" name="title" value="{{ ask.title }}" maxlength="100" required/>
     </p>
     <p>
       Ehdotus:<br />
-      <textarea name="content" rows="5" cols="40">{{ ask.content }}</textarea>
+      <textarea name="content" rows="5" cols="40" maxlength="1000" required>{{ ask.content }}</textarea>
     </p>
     <input type="submit" value="Lähetä" />
     <input type="hidden" name="ask_id" value="{{ ask.id }}"/>
