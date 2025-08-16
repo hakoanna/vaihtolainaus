@@ -1,6 +1,6 @@
 import sqlite3
 from flask import Flask
-from flask import redirect, render_template, request, session
+from flask import abort, redirect, render_template, request, session
 from werkzeug.security import check_password_hash, generate_password_hash 
 import config
 import db
@@ -96,12 +96,18 @@ def create_ask():
 @app.route("/edit_ask/<int:ask_id>", methods=["GET", "POST"])
 def edit_ask(ask_id):
     ask = asks.get_ask(ask_id)
+    print(ask["user_id"], session["user_id"], "1")
+    if ask["user_id"] != session["user_id"]:
+        abort(403)
 
     if request.method == "GET":
         return render_template("edit_ask.html", ask=ask)
 
     if request.method == "POST":
         ask_id = request.form["ask_id"]
+        ask = asks.get_ask(ask_id)
+        if ask["user_id"] != session["user_id"]:
+            abort(403)
         title = request.form["title"]
         content = request.form["content"]
         asks.update_ask(ask_id, title, content)
@@ -110,12 +116,17 @@ def edit_ask(ask_id):
 @app.route("/remove_ask/<int:ask_id>", methods=["GET", "POST"])
 def remove_ask(ask_id):
     ask = asks.get_ask(ask_id)
+    if ask["user_id"] != session["user_id"]:
+        abort(403)
 
     if request.method == "GET":
         return render_template("remove_ask.html", ask=ask)
 
     if request.method == "POST":
         ask_id = request.form["ask_id"]
+        ask = asks.get_ask(ask_id)
+        if ask["user_id"] != session["user_id"]:
+            abort(403)
         if "continue" in request.form:
             asks.remove_ask(ask_id)
         return redirect("/trade")
