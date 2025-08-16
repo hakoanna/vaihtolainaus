@@ -93,7 +93,11 @@ def show_ask(ask_id):
 def create_ask():
     require_login()
     title = request.form["title"]
+    if not title or len(title) > 50:
+        abort(403)
     content = request.form["content"]
+    if not content or len(content) > 1000:
+        abort(403)
     user_id = session["user_id"]
 
     asks.add_ask(title, content, user_id)

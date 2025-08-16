@@ -26,12 +26,12 @@
   <form action="/create_ask" method="post">
     <p>
       Ehdotus: <br />
-      <input type="text" name="title" />
+      <input type="text" name="title" maxlength="100" required />
     </p>
     <p>
         Lisätiedot:
         <br />
-        <textarea name="content" rows="8" cols="60"></textarea>
+        <textarea name="content" rows="8" cols="60" maxlength="1000" required></textarea>
     </p>
     <input type="submit" value="Julkaise ehdotus" />
   </form>
