@@ -7,6 +7,10 @@
 
 <body>
   <h1>Vaihtokaupat</h1>
+    <p>
+    <a href="/">Etusivulle</a>
+    <hr />
+  </p>
   <h2>Ehdotukset</h2>
     {% for ask in asks %}
     <p>
@@ -17,6 +21,7 @@
     <hr />
     {% endfor %}
   <br />
+  {% if session.username %}
   <h2>Uusi ehdotus</h2>
   <form action="/create_ask" method="post">
     <p>
@@ -30,9 +35,7 @@
     </p>
     <input type="submit" value="Julkaise ehdotus" />
   </form>
+  {% endif %}
 
-  <p>
-    <a href="/">Etusivulle</a>
-  </p>
 </body>
 </html>

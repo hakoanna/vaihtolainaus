@@ -10,7 +10,6 @@
   
   <p>
     {% if session.user_id %}
-    <a href="/register">Luo tunnus</a> |
     <a href="/logout">Kirjaudu ulos</a> |
     <a href="/search">Haku</a> 
     <hr />
@@ -19,7 +18,8 @@
     (ID-numero: {{ session.user_id  }})
     {% else %}
     <a href="/register">Luo tunnus</a> |
-    <a href="/login">Kirjaudu sisään</a>
+    <a href="/login">Kirjaudu sisään</a> |
+    <a href="/search">Haku</a>
     {% endif %}
     <hr />
   </p>

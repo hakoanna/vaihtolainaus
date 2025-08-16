@@ -9,6 +9,10 @@ import asks
 app = Flask(__name__)
 app.secret_key = config.secret_key
 
+def require_login():
+    if "user_id" not in session:
+        abort(403)
+
 @app.route("/")
 def index():
     info = asks.get_asks_info()
@@ -87,6 +91,7 @@ def show_ask(ask_id):
 
 @app.route("/create_ask", methods=["POST"])
 def create_ask():
+    require_login()
     title = request.form["title"]
     content = request.form["content"]
     user_id = session["user_id"]
@@ -97,6 +102,7 @@ def create_ask():
 
 @app.route("/edit_ask/<int:ask_id>", methods=["GET", "POST"])
 def edit_ask(ask_id):
+    require_login()
     ask = asks.get_ask(ask_id)
     if not ask:
         abort(404)
@@ -107,6 +113,7 @@ def edit_ask(ask_id):
         return render_template("edit_ask.html", ask=ask)
 
     if request.method == "POST":
+        require_login()
         ask_id = request.form["ask_id"]
         ask = asks.get_ask(ask_id)
         if not ask:
@@ -120,6 +127,7 @@ def edit_ask(ask_id):
 
 @app.route("/remove_ask/<int:ask_id>", methods=["GET", "POST"])
 def remove_ask(ask_id):
+    require_login()
     ask = asks.get_ask(ask_id)
     if not ask:
             abort(404)
@@ -130,6 +138,7 @@ def remove_ask(ask_id):
         return render_template("remove_ask.html", ask=ask)
 
     if request.method == "POST":
+        require_login()
         ask_id = request.form["ask_id"]
         ask = asks.get_ask(ask_id)
         if ask["user_id"] != session["user_id"]:
