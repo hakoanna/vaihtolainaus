@@ -94,5 +94,5 @@ def get_replies(ask_id):
     sql = """SELECT r.content, u.id user_id, u.username
             FROM replies r, users u
             WHERE r.ask_id = ? AND r.user_id = u.id
-            ORDER BY r.id DESC"""
+            ORDER BY r.id"""
     return db.query(sql, [ask_id])

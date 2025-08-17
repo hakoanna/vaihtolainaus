@@ -30,11 +30,12 @@
   <hr />
   <h3>Vastaukset</h3>
   {% for reply in replies %}
-    <a href="/user/{{ reply.user }}">{{ reply.username }}</a>
+    <a href="/user/{{ reply.user }}">{{ reply.username }}</a>:
     <br />
     {{ reply.content }}
     <br />
   {% endfor%}
+  {% if session.username %}
   <hr />
   <h4>Uusi vastaus</h4>
   <form action="/create_reply" method="post">
@@ -44,6 +45,7 @@
     <input type="hidden" name="ask_id" value="{{ ask.id }}">
     <input type="submit" value="Julkaise vastaus" />
   </form>
+  {% endif %}
   <p>
     <hr />
     <a href="/trade">Takaisin</a> |
