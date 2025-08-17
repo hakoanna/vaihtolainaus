@@ -125,7 +125,15 @@ def edit_ask(ask_id):
         abort(403)
 
     if request.method == "GET":
-        return render_template("edit_ask.html", ask=ask)
+        all_classes = asks.get_all_classes()
+        classes = {}
+        for my_class in all_classes:
+            classes[my_class] = ""
+        for entry in asks.get_classes(ask_id):
+            classes[entry["title"]] = entry["value"]
+
+        return render_template("edit_ask.html", ask=ask, all_classes=all_classes,
+        classes=classes)
 
     if request.method == "POST":
         require_login()
@@ -141,7 +149,14 @@ def edit_ask(ask_id):
         content = request.form["content"]
         if not content or len(content) > 1000:
             abort(403)
-        asks.update_ask(ask_id, title, content)
+
+        classes = []
+        for entry in request.form.getlist("classes"):
+            if entry:
+                parts = entry.split(":")
+                classes.append((parts[0], parts[1]))
+
+        asks.update_ask(ask_id, title, content, classes)
         return redirect("/ask/" + str(ask_id))
 
 @app.route("/remove_ask/<int:ask_id>", methods=["GET", "POST"])

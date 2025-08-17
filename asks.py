@@ -57,12 +57,19 @@ def get_ask(ask_id):
     result = db.query(sql, [ask_id])
     return result[0] if result else None
 
-def update_ask(ask_id, title, content):
+def update_ask(ask_id, title, content, classes):
     sql = """UPDATE asks SET
                             title = ?,
                             content = ?
                         WHERE id = ?"""
-    db.execute(sql, [title, content, ask_id])
+
+    sql = "DELETE FROM ask_classes WHERE ask_id = ?"
+    db.execute(sql, [ask_id])
+
+    sql = "INSERT INTO ask_classes (ask_id, title, value) VALUES (?, ?, ?)"
+    for title, value in classes:
+        db.execute(sql, [ask_id, title, value])
+
 
 def remove_ask(ask_id):
     sql = "DELETE FROM asks WHERE id = ?"

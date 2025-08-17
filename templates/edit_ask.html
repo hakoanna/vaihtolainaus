@@ -17,7 +17,22 @@
       Ehdotus:<br />
       <textarea name="content" rows="5" cols="40" maxlength="1000" required>{{ ask.content }}</textarea>
     </p>
-    <input type="submit" value="Lähetä" />
+    {% for class in all_classes %}
+    <p>
+      {{ class }}:
+      <select name="classes">
+        <option value="">(valitse)</option>
+      {% for option in all_classes[class] %}
+        {% if classes[class] == option %}
+          <option value="{{ class }}:{{ option }}" selected>{{ option }}</option>
+        {% else %}
+          <option value="{{ class }}:{{ option }}">{{ option }}</option>
+        {% endif %}
+      {% endfor %}
+      </select>
+    </p>
+    {% endfor %}
+    <input type="submit" value="Lähetä muutokset" />
     <input type="hidden" name="ask_id" value="{{ ask.id }}"/>
   </form>
 </body>
