@@ -82,3 +82,17 @@ def search_asks(query):
             WHERE title LIKE ? OR content LIKE ?
             ORDER BY id DESC"""
     return db.query(sql, ["%" + query + "%", "%" + query + "%"])
+
+def add_reply(ask_id, user_id, content):
+    sql = """INSERT INTO replies (ask_id, user_id, content, sent_at)
+            VALUES (?, ?, ?, datetime('now'))"""
+    db.execute(sql, [ask_id, user_id, content])
+
+    ask_id = db.last_insert_id()
+
+def get_replies(ask_id):
+    sql = """SELECT r.content, u.id user_id, u.username
+            FROM replies r, users u
+            WHERE r.ask_id = ? AND r.user_id = u.id
+            ORDER BY r.id DESC"""
+    return db.query(sql, [ask_id])

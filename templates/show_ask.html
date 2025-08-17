@@ -7,7 +7,18 @@
 
 <body>
   <h1>{{ ask.title }}</h1>
+    <p>
+      Ehdottaja: <a href="/user/{{ ask.user_id }}">{{ ask.username }}</a> |
+      Klo: {{ ask.sent_at }}
+      <br />
+  {% if ask.user_id == session.user_id %}
+      <a href="/edit_ask/{{ ask.id }}">Muokkaa</a> |
+      <a href="/remove_ask/{{ ask.id }}">Poista</a>
+    </p>
+  {% endif %}
+  <hr />
   <p>
+    <h2>Tiedot</h2>
     {% for class in classes %}
     {{ class.value }} |
     {% endfor %}
@@ -15,15 +26,24 @@
   <p>
     {{ ask.content }}
   </p>
-  <p>
-    Ehdottaja: <a href="/user/{{ ask.user_id }}">{{ ask.username }}</a>
-  </p>
-    {% if ask.user_id == session.user_id %}
-  <p>
-    <a href="/edit_ask/{{ ask.id }}">Muokkaa</a> |
-    <a href="/remove_ask/{{ ask.id }}">Poista</a> 
-  </p>
-  {% endif %}
+
+  <hr />
+  <h3>Vastaukset</h3>
+  {% for reply in replies %}
+    <a href="/user/{{ reply.user }}">{{ reply.username }}</a>
+    <br />
+    {{ reply.content }}
+    <br />
+  {% endfor%}
+  <hr />
+  <h4>Uusi vastaus</h4>
+  <form action="/create_reply" method="post">
+    Vastaus: <br />
+    <textarea name="content" rows="4" cols="40" maxlength="1000" required></textarea>
+    <br />
+    <input type="hidden" name="ask_id" value="{{ ask.id }}">
+    <input type="submit" value="Julkaise vastaus" />
+  </form>
   <p>
     <hr />
     <a href="/trade">Takaisin</a> |

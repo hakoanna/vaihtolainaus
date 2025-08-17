@@ -92,7 +92,8 @@ def show_ask(ask_id):
     if not ask:
         abort(404)
     classes = asks.get_classes(ask_id)
-    return render_template("show_ask.html", ask=ask, classes=classes)
+    replies = asks.get_replies(ask_id)
+    return render_template("show_ask.html", ask=ask, classes=classes, replies=replies)
 
 @app.route("/create_ask", methods=["POST"])
 def create_ask():
@@ -107,7 +108,6 @@ def create_ask():
 
     all_classes = asks.get_all_classes()
 
-    print("testi1")
     classes = []
     for entry in request.form.getlist("classes"):
         if entry:
@@ -129,9 +129,9 @@ def edit_ask(ask_id):
         abort(404)
     if ask["user_id"] != session["user_id"]:
         abort(403)
+    all_classes = asks.get_all_classes()
 
     if request.method == "GET":
-        all_classes = asks.get_all_classes()
         classes = {}
         for my_class in all_classes:
             classes[my_class] = ""
@@ -190,6 +190,22 @@ def remove_ask(ask_id):
         if "continue" in request.form:
             asks.remove_ask(ask_id)
         return redirect("/")
+
+@app.route("/create_reply", methods=["POST"])
+def create_reply():
+    require_login()
+    content = request.form["content"]
+    if not content or len(content) > 1000:
+        abort(403)
+    ask_id = request.form["ask_id"]
+    ask = asks.get_ask(ask_id)
+    if not ask:
+        abort(403)
+    user_id = session["user_id"]
+
+    asks.add_reply(ask_id, user_id, content)
+
+    return redirect("/ask/" + str(ask_id))
 
 
 @app.route("/borrow")
