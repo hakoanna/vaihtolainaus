@@ -71,6 +71,8 @@ def update_ask(ask_id, title, content, classes):
         db.execute(sql, [ask_id, title, value])
 
 def remove_ask(ask_id):
+    sql = "DELETE FROM ask_classes WHERE ask_id = ?"
+    db.execute(sql, [ask_id])
     sql = "DELETE FROM asks WHERE id = ?"
     db.execute(sql, [ask_id])
 
