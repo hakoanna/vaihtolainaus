@@ -11,7 +11,7 @@
     {{ ask.content }}
   </p>
   <p>
-    Ehdottaja: {{ ask.username }}
+    Ehdottaja: <a href="/user/{{ ask.user_id }}">{{ ask.username }}</a>
   </p>
     {% if ask.user_id == session.user_id %}
   <p>
