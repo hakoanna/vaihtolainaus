@@ -21,6 +21,8 @@
     <hr />
     {% endfor %}
   <br />
+
+
   {% if session.username %}
   <h2>Uusi ehdotus</h2>
   <form action="/create_ask" method="post">
@@ -28,6 +30,17 @@
       Ehdotus: <br />
       <input type="text" name="title" maxlength="100" required />
     </p>
+    {% for class in classes %}
+    <p>
+      {{ class }}:
+      <select name="classes">
+        <option value="">(valitse)</option>
+        {% for option in classes[class] %}
+          <option value="{{ class }}:{{ option }}">{{ option }}</option>
+        {% endfor %}
+      </select>
+    </p>
+    {% endfor %}
     <p>
         Lisätiedot:
         <br />

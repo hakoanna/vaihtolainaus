@@ -8,6 +8,11 @@
 <body>
   <h1>{{ ask.title }}</h1>
   <p>
+    {% for class in classes %}
+    {{ class.value }} |
+    {% endfor %}
+  </p>
+  <p>
     {{ ask.content }}
   </p>
   <p>

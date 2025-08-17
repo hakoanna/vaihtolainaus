@@ -12,6 +12,19 @@ CREATE TABLE asks (
     user_id INTEGER REFERENCES users
 );
 
+CREATE TABLE classes (
+    id INTEGER PRIMARY KEY,
+    title TEXT,
+    value TEXT
+);
+
+CREATE TABLE ask_classes (
+    id INTEGER PRIMARY KEY,
+    ask_id INTEGER REFERENCES asks,
+    title TEXT,
+    value TEXT
+);
+
 CREATE TABLE replies (
     id INTEGER PRIMARY KEY,
     content TEXT,

@@ -1,9 +1,31 @@
 import db
 
-def add_ask(title, content, user_id):
+def get_all_classes():
+    sql = "SELECT title, value FROM classes ORDER BY id"
+    result = db.query(sql)
+
+    classes = {}
+    for title, value in result:
+        classes[title] = []
+    for title, value in result:
+        classes[title].append(value)
+
+    return classes
+
+def get_classes(ask_id):
+    sql = "SELECT title, value FROM ask_classes WHERE ask_id = ?"
+    return db.query(sql, [ask_id])
+
+def add_ask(title, content, user_id, classes):
     sql = """INSERT INTO asks (title, content, sent_at, user_id)
             VALUES (?, ?, datetime('now'), ?)"""
     db.execute(sql, [title, content, user_id])
+
+    ask_id = db.last_insert_id()
+
+    sql = "INSERT INTO ask_classes (ask_id, title, value) VALUES (?, ?, ?)"
+    for title, value in classes:
+        db.execute(sql, [ask_id, title, value])
 
 def get_asks_info():
     sql = "SELECT COUNT(a.id) total, MAX(a.sent_at) last FROM asks a"

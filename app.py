@@ -83,14 +83,16 @@ def logout():
 @app.route("/trade")
 def trade():
     all_asks = asks.get_asks()
-    return render_template("trade.html", asks=all_asks)
+    classes = asks.get_all_classes()
+    return render_template("trade.html", asks=all_asks, classes=classes)
 
 @app.route("/ask/<int:ask_id>")
 def show_ask(ask_id):
     ask = asks.get_ask(ask_id)
     if not ask:
         abort(404)
-    return render_template("show_ask.html", ask=ask)
+    classes = asks.get_classes(ask_id)
+    return render_template("show_ask.html", ask=ask, classes=classes)
 
 @app.route("/create_ask", methods=["POST"])
 def create_ask():
@@ -103,7 +105,13 @@ def create_ask():
         abort(403)
     user_id = session["user_id"]
 
-    asks.add_ask(title, content, user_id)
+    classes = []
+    for entry in request.form.getlist("classes"):
+        if entry:
+            parts = entry.split(":")
+            classes.append((parts[0], parts[1]))
+
+    asks.add_ask(title, content, user_id, classes)
 
     return redirect("/")
 
