@@ -105,12 +105,18 @@ def create_ask():
         abort(403)
     user_id = session["user_id"]
 
+    all_classes = asks.get_all_classes()
+
+    print("testi1")
     classes = []
     for entry in request.form.getlist("classes"):
         if entry:
-            parts = entry.split(":")
-            classes.append((parts[0], parts[1]))
-
+            class_title, class_value = entry.split(":")
+            if class_title not in all_classes:
+                abort(403)
+            if class_value not in all_classes[class_title]:
+                abort(403)
+            classes.append((class_title, class_value))
     asks.add_ask(title, content, user_id, classes)
 
     return redirect("/")
@@ -153,8 +159,12 @@ def edit_ask(ask_id):
         classes = []
         for entry in request.form.getlist("classes"):
             if entry:
-                parts = entry.split(":")
-                classes.append((parts[0], parts[1]))
+                class_title, class_value = entry.split(":")
+                if class_title not in all_classes:
+                    abort(403)
+                if class_value not in all_classes[class_title]:
+                    abort(403)
+                classes.append((class_title, class_value))
 
         asks.update_ask(ask_id, title, content, classes)
         return redirect("/ask/" + str(ask_id))
@@ -179,7 +189,7 @@ def remove_ask(ask_id):
             abort(403)
         if "continue" in request.form:
             asks.remove_ask(ask_id)
-        return redirect("/trade")
+        return redirect("/")
 
 
 @app.route("/borrow")
