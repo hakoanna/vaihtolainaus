@@ -93,8 +93,25 @@ def add_reply(ask_id, user_id, content):
     ask_id = db.last_insert_id()
 
 def get_replies(ask_id):
-    sql = """SELECT r.content, u.id user_id, u.username
+    sql = """SELECT r.id, r.content, u.id user_id, u.username
             FROM replies r, users u
             WHERE r.ask_id = ? AND r.user_id = u.id
             ORDER BY r.id"""
     return db.query(sql, [ask_id])
+
+def get_reply(reply_id):
+    sql = """SELECT r.id,
+                    r.content,
+                    r.sent_at,
+                    r.user_id,
+                    u.id user_id,
+                    u.username
+                FROM replies r, users u
+                WHERE r.user_id = u.id AND
+                    r.id = ?"""
+    result = db.query(sql, [reply_id])
+    return result[0] if result else None
+
+def remove_reply(reply_id):
+    sql = "DELETE FROM replies WHERE id = ?"
+    db.execute(sql, [reply_id])
