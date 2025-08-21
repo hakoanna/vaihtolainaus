@@ -24,7 +24,7 @@
     {% endfor %}
   </p>
   <p>
-    {{ ask.content }}
+    {{ ask.content | show_lines }}
   </p>
 
   <hr />
@@ -32,7 +32,7 @@
   {% for reply in replies %}
     <a href="/user/{{ reply.user }}">{{ reply.username }}</a>:
     <br />
-    {{ reply.content }}
+    {{ reply.content | show_lines }}
     <br />
   {% endfor%}
   {% if session.username %}

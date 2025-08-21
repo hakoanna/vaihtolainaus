@@ -1,4 +1,3 @@
-import sqlite3
 from flask import Flask
 from flask import abort, redirect, render_template, request, session
 
@@ -6,9 +5,16 @@ import config
 import db
 import asks
 import users
+import markupsafe
 
 app = Flask(__name__)
 app.secret_key = config.secret_key
+
+@app.template_filter()
+def show_lines(content):
+    content = str(markupsafe.escape(content))
+    content = content.replace("\n", "<br />")
+    return markupsafe.Markup(content)
 
 def require_login():
     if "user_id" not in session:
