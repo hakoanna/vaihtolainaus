@@ -32,12 +32,18 @@
     </p>
     {% for class in classes %}
     <p>
+      {% if class == "Tyyppi" %}
+        {% for option in classes[class] %}
+        <input type="radio" name="type" value="{{ class }}:{{ option }}" /> {{ option }}
+        {% endfor %}
+      {% else %}
       {{ class }}:
       <select name="classes">
         <option value="">(valitse)</option>
         {% for option in classes[class] %}
           <option value="{{ class }}:{{ option }}">{{ option }}</option>
         {% endfor %}
+      {% endif %}
       </select>
     </p>
     {% endfor %}
