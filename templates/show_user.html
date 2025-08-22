@@ -8,12 +8,25 @@
 <body>
   <h1>{{ user.username }}</h1>
   <p>
-    Käyttäjällä on yhteensä {{ asks | count }} ehdotusta.
+    {% for point in data %}
+      {% if point.status == 1 %}
+        {% if point.total == 1 %}
+          Käyttäjällä on {{ point.total }} avoin vaihtokauppa.
+        {% else %}
+          Käyttäjällä on {{ point.total }} avointa vaihtokauppaa.
+        {% endif %}
+      {% else %}
+        Käyttäjä on tehnyt {{ point.total }} vaihtokaupat.
+      {% endif %}
+      <br />
+    {% endfor %}
   </p>
-  <h2>Ehdotukset</h2>
+  <h3>Avoimet vaihtokaupat</h3>
   <u>
     {% for ask in asks %}
-    <li><a href="/ask/{{ ask.id }}">{{ ask.title }}</a></li>
+      {% if ask.status == 1 %}
+        <li><a href="/ask/{{ ask.id }}">{{ ask.title }}</a></li>
+      {% endif %}
     {% endfor %}
   </u>
   <p>

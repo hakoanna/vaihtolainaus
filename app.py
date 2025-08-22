@@ -31,7 +31,8 @@ def show_user(user_id):
     if not user:
         abort(404)
     asks = users.get_asks(user_id)
-    return render_template("show_user.html", user=user, asks=asks)
+    data = users.get_user_data(user_id)
+    return render_template("show_user.html", user=user, asks=asks, data=data)
 
 @app.route("/search")
 def search():

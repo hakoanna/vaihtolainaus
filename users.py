@@ -7,7 +7,7 @@ def get_user(user_id):
     return result[0] if result else None
 
 def get_asks(user_id):
-    sql = "SELECT id, title FROM asks WHERE user_id = ? ORDER BY id DESC"
+    sql = "SELECT id, title, status FROM asks WHERE user_id = ? ORDER BY id DESC"
     return db.query(sql, [user_id])
 
 def create_user(username, password):
@@ -27,3 +27,10 @@ def check_login(username, password):
         return user_id
     else:
         return None
+
+def get_user_data(user_id):
+    sql = """SELECT a.status, COUNT(a.id) total
+            FROM asks a, users u
+            WHERE u.id = a.user_id AND u.id = ?
+            GROUP BY a.status"""
+    return db.query(sql, [user_id])
