@@ -25,11 +25,12 @@
   </p>
   <p>
     {{ ask.content | show_lines }}
-    {{ ask.status }}
   </p>
   {% if ask.status == 1 %}
     <form action="/close_ask/{{ ask.id }}" method="post">
       <input type="submit" value="Sulje" />
+      <input type="hidden" name="ask_id" value="{{ ask.id }}"/>
+
     </form>
   {% endif %}
   <hr />

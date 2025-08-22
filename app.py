@@ -208,6 +208,12 @@ def remove_ask(ask_id):
 @app.route("/close_ask/<int:ask_id>", methods=["POST"])
 def close_ask(ask_id):
     require_login()
+    ask_id = request.form["ask_id"]
+    ask = asks.get_ask(ask_id)
+    if not ask:
+        abort(404)
+    if ask["user_id"] != session["user_id"]:
+        abort(403)
     asks.close_ask(ask_id)
     return redirect("/ask/" + str(ask_id))
 
