@@ -40,9 +40,10 @@
     {{ reply.content | show_lines }}
     <br />
     {% if session.user_id == reply.user_id %}
-      <p>
-        <a href="/remove_reply/{{ reply.id }}">Poista</a>
-      </p>
+      <form action="/remove_reply/{{ reply.id }}" method="post">
+        <input type="submit" name="remove_reply" value="Poista" />
+        <input type="hidden" name="ask_id" value="{{ ask.id }}"/>
+      </form>
     {% endif %}
   {% endfor%}
   {% if ask.status == 1 %}

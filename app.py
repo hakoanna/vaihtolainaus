@@ -227,27 +227,17 @@ def create_reply():
 
     return redirect("/ask/" + str(ask_id))
 
-@app.route("/remove_reply/<int:reply_id>", methods=["GET", "POST"])
+@app.route("/remove_reply/<int:reply_id>", methods=["POST"])
 def remove_reply(reply_id):
     require_login()
+    ask_id = request.form["ask_id"]
     reply = asks.get_reply(reply_id)
     if not reply:
-            abort(404)
-    if reply["user_id"] != session["user_id"]:
+        abort(404)
+    if session["user_id"] != reply["user_id"]:
         abort(403)
-
-    if request.method == "GET":
-        return render_template("remove_reply.html", reply=reply)
-
-    if request.method == "POST":
-        require_login()
-        reply_id = request.form["reply_id"]
-        reply = asks.get_reply(reply_id)
-        if reply["user_id"] != session["user_id"]:
-            abort(403)
-        if "continue" in request.form:
-            asks.remove_reply(reply_id)
-        return redirect("/")
+    asks.remove_reply(reply_id)
+    return redirect("/ask/" + str(ask_id))
 
 @app.route("/borrow")
 def borrow():
