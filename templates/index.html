@@ -30,7 +30,11 @@
     <br />
   </h2>
   <p>
-    Ehdotusten lukumäärä: {{ info.total }}
+    {% if info.total == 1 %}
+    {{ info.total }} avoin vaihto
+    {% else %}
+    {{ info.total }} avointa vaihtoa
+    {% endif %}
     <br />
     Uusin: {{ info.last }}
   </p>

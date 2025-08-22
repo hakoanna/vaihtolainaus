@@ -9,7 +9,8 @@ CREATE TABLE asks (
     title TEXT,
     content TEXT,
     sent_at TEXT,
-    user_id INTEGER REFERENCES users
+    user_id INTEGER REFERENCES users,
+    status INTEGER
 );
 
 CREATE TABLE classes (

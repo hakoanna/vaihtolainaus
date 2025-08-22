@@ -16,7 +16,11 @@
     <p>
       <a href="/ask/{{ ask.id }}">{{ ask.title }}</a>
       <br />
-      {{ ask.sent_at }}
+      {% if ask.status == 1 %}
+      Auki | {{ ask.sent_at }}
+      {% elif ask.status == 0 %}
+      Kiinni | {{ ask.sent_at }}
+      {% endif %}
     </p>
     <hr />
     {% endfor %}

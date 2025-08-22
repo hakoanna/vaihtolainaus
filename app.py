@@ -205,6 +205,12 @@ def remove_ask(ask_id):
             asks.remove_ask(ask_id)
         return redirect("/")
 
+@app.route("/close_ask/<int:ask_id>", methods=["POST"])
+def close_ask(ask_id):
+    require_login()
+    asks.close_ask(ask_id)
+    return redirect("/ask/" + str(ask_id))
+
 @app.route("/create_reply", methods=["POST"])
 def create_reply():
     require_login()

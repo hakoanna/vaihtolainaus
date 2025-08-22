@@ -25,8 +25,13 @@
   </p>
   <p>
     {{ ask.content | show_lines }}
+    {{ ask.status }}
   </p>
-
+  {% if ask.status == 1 %}
+    <form action="/close_ask/{{ ask.id }}" method="post">
+      <input type="submit" value="Sulje" />
+    </form>
+  {% endif %}
   <hr />
   <h3>Vastaukset</h3>
   {% for reply in replies %}
@@ -40,6 +45,7 @@
       </p>
     {% endif %}
   {% endfor%}
+  {% if ask.status == 1 %}
   {% if session.username %}
   <hr />
   <h4>Uusi vastaus</h4>
@@ -50,6 +56,7 @@
     <input type="hidden" name="ask_id" value="{{ ask.id }}">
     <input type="submit" value="Julkaise vastaus" />
   </form>
+  {% endif %}
   {% endif %}
   <p>
     <hr />

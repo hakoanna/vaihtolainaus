@@ -17,8 +17,8 @@ def get_classes(ask_id):
     return db.query(sql, [ask_id])
 
 def add_ask(title, content, user_id, classes):
-    sql = """INSERT INTO asks (title, content, sent_at, user_id)
-            VALUES (?, ?, datetime('now'), ?)"""
+    sql = """INSERT INTO asks (title, content, sent_at, user_id, status)
+            VALUES (?, ?, datetime('now'), ?, 1)"""
     db.execute(sql, [title, content, user_id])
 
     ask_id = db.last_insert_id()
@@ -28,7 +28,7 @@ def add_ask(title, content, user_id, classes):
         db.execute(sql, [ask_id, title, value])
 
 def get_asks_info():
-    sql = "SELECT COUNT(a.id) total, MAX(a.sent_at) last FROM asks a"
+    sql = "SELECT COUNT(a.id) total, MAX(a.sent_at) last FROM asks a WHERE a.status=1"
     return db.query(sql)[0]
 
 def get_asks():
@@ -36,7 +36,8 @@ def get_asks():
                     a.title,
                     a.user_id,
                     a.sent_at,
-                    u.username
+                    u.username,
+                    a.status
             FROM asks a, users u
             WHERE a.user_id = u.id
             GROUP BY a.id
@@ -49,6 +50,7 @@ def get_ask(ask_id):
                     a.content,
                     a.sent_at,
                     a.user_id,
+                    a.status,
                     u.id user_id,
                     u.username
                 FROM asks a, users u
@@ -84,6 +86,10 @@ def search_asks(query):
             WHERE title LIKE ? OR content LIKE ?
             ORDER BY id DESC"""
     return db.query(sql, ["%" + query + "%", "%" + query + "%"])
+
+def close_ask(ask_id):
+    sql = "UPDATE asks SET status = 0 WHERE id = ?"
+    db.execute(sql, [ask_id])
 
 def add_reply(ask_id, user_id, content):
     sql = """INSERT INTO replies (ask_id, user_id, content, sent_at)
