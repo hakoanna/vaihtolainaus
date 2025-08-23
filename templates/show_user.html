@@ -7,6 +7,21 @@
 
 <body>
   <h1>{{ user.username }}</h1>
+
+  <p>
+  {% if user.has_image %}
+  <img class="shrinkToFit" src="/image/{{ user.id }}" width="150" height="150"/>
+  <br />
+    {% if user.id == session.user_id %}
+      <a href="/add_profile_image">Vaihda profiilikuva</a>
+    {% endif %}
+  {% else %}
+    {% if user.id == session.user_id %}
+      <a href="/add_profile_image">Lisää profiilikuva</a>
+    {% endif %}
+  {% endif %}
+  </p>
+
   <p>
     {% for point in data %}
       {% if point.status == 1 %}

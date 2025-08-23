@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import abort, redirect, render_template, request, session
+from flask import abort, make_response, redirect, render_template, request, session
 
 import config
 import db
@@ -33,6 +33,37 @@ def show_user(user_id):
     asks = users.get_asks(user_id)
     data = users.get_user_data(user_id)
     return render_template("show_user.html", user=user, asks=asks, data=data)
+
+@app.route("/add_profile_image", methods=["GET", "POST"])
+def add_profile_image():
+    require_login()
+
+    if request.method == "GET":
+        return render_template("add_profile_image.html")
+
+    if request.method == "POST":
+        file = request.files["image"]
+        if not file.filename.endswith(".jpg"):
+            return "VIRHE: väärä tiedostomuoto"
+
+        image = file.read()
+        if len(image) > 100 * 1024:
+            return "VIRHE: liian suuri kuva"
+
+        user_id = session["user_id"]
+        users.update_image(user_id, image)
+        return redirect("/user/" + str(user_id))
+
+@app.route("/image/<int:user_id>")
+def show_user_image(user_id):
+    image = users.get_image(user_id)
+    if not image:
+        abort(404)
+
+    response = make_response(bytes(image))
+    response.headers.set("Content-Type", "image/jpeg")
+    return response
+
 
 @app.route("/search")
 def search():
