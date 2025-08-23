@@ -81,10 +81,10 @@ def remove_ask(ask_id):
     db.execute(sql, [ask_id])
 
 def search_asks(query):
-    sql = """SELECT id, title
-            FROM asks
-            WHERE title LIKE ? OR content LIKE ?
-            ORDER BY id DESC"""
+    sql = """SELECT a.id, a.title
+            FROM asks a, ask_classes c
+            WHERE (c.value LIKE ? AND a.id = c.ask_id) OR a.title LIKE ?
+            GROUP BY a.id"""
     return db.query(sql, ["%" + query + "%", "%" + query + "%"])
 
 def close_ask(ask_id):
