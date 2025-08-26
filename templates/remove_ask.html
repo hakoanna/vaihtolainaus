@@ -12,6 +12,7 @@
     <p>
       Haluatko varmasti poistaa ehdotuksen?
     </p>
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" name="continue" value="Poista" />
     <input type="submit" name="cancel" value="Peruuta" />
     <input type="hidden" name="ask_id" value="{{ ask.id }}"/>

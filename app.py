@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import abort, make_response, redirect, render_template, request, session
-
+import secrets
 import config
 import db
 import asks
@@ -15,6 +15,12 @@ def show_lines(content):
     content = str(markupsafe.escape(content))
     content = content.replace("\n", "<br />")
     return markupsafe.Markup(content)
+
+def check_csrf():
+    if "csrf_token" not in request.form:
+        abort(403)
+    if request.form["csrf_token"] != session["csrf_token"]:
+        abort(403)
 
 def require_login():
     if "user_id" not in session:
@@ -42,6 +48,7 @@ def add_profile_image():
         return render_template("add_profile_image.html")
 
     if request.method == "POST":
+        check_csrf()
         file = request.files["image"]
         if not file.filename.endswith(".jpg"):
             return "VIRHE: väärä tiedostomuoto"
@@ -108,6 +115,7 @@ def login():
         if user_id:
             session["user_id"] = user_id
             session["username"] = username
+            session["csrf_token"] = secrets.token_hex(16)
             return redirect("/")
         else:
             return "VIRHE: väärä tunnus tai salasana"
@@ -135,6 +143,7 @@ def show_ask(ask_id):
 
 @app.route("/create_ask", methods=["POST"])
 def create_ask():
+    check_csrf()
     require_login()
     title = request.form["title"]
     if not title or len(title) > 50:
@@ -188,6 +197,7 @@ def edit_ask(ask_id):
         classes=classes)
 
     if request.method == "POST":
+        check_csrf()
         require_login()
         ask_id = request.form["ask_id"]
         ask = asks.get_ask(ask_id)
@@ -228,6 +238,7 @@ def remove_ask(ask_id):
         return render_template("remove_ask.html", ask=ask)
 
     if request.method == "POST":
+        check_csrf()
         require_login()
         ask_id = request.form["ask_id"]
         ask = asks.get_ask(ask_id)
@@ -239,6 +250,7 @@ def remove_ask(ask_id):
 
 @app.route("/close_ask/<int:ask_id>", methods=["POST"])
 def close_ask(ask_id):
+    check_csrf()
     require_login()
     ask_id = request.form["ask_id"]
     ask = asks.get_ask(ask_id)
@@ -251,6 +263,7 @@ def close_ask(ask_id):
 
 @app.route("/create_reply", methods=["POST"])
 def create_reply():
+    check_csrf()
     require_login()
     content = request.form["content"]
     if not content or len(content) > 1000:
@@ -267,6 +280,7 @@ def create_reply():
 
 @app.route("/remove_reply/<int:reply_id>", methods=["POST"])
 def remove_reply(reply_id):
+    check_csrf()
     require_login()
     ask_id = request.form["ask_id"]
     reply = asks.get_reply(reply_id)

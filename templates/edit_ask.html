@@ -32,6 +32,7 @@
       </select>
     </p>
     {% endfor %}
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" value="Lähetä muutokset" />
     <input type="hidden" name="ask_id" value="{{ ask.id }}"/>
   </form>
