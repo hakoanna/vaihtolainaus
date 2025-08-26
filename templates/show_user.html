@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Käyttäjä {{ user.username }}</title>
-</head>
+{% block title %}{{ user.username }}{% endblock %}
 
-<body>
-  <h1>{{ user.username }}</h1>
+{% block content%}
+<h2>{{ user.username }}</h2>
 
-  <p>
+<p>
   {% if user.has_image %}
   <img class="shrinkToFit" src="/image/{{ user.id }}" width="150" height="150"/>
   <br />
@@ -20,33 +17,30 @@
       <a href="/add_profile_image">Lisää profiilikuva</a>
     {% endif %}
   {% endif %}
-  </p>
+</p>
 
-  <p>
-    {% for point in data %}
-      {% if point.status == 1 %}
-        {% if point.total == 1 %}
-          Käyttäjällä on {{ point.total }} avoin vaihtokauppa.
-        {% else %}
-          Käyttäjällä on {{ point.total }} avointa vaihtokauppaa.
-        {% endif %}
+<p>
+  {% for point in data %}
+    {% if point.status == 1 %}
+      {% if point.total == 1 %}
+        Käyttäjällä on {{ point.total }} avoin vaihtokauppa.
       {% else %}
-        Käyttäjä on tehnyt {{ point.total }} vaihtokaupat.
+        Käyttäjällä on {{ point.total }} avointa vaihtokauppaa.
       {% endif %}
-      <br />
-    {% endfor %}
-  </p>
-  <h3>Avoimet vaihtokaupat</h3>
-  <u>
-    {% for ask in asks %}
-      {% if ask.status == 1 %}
-        <li><a href="/ask/{{ ask.id }}">{{ ask.title }}</a></li>
-      {% endif %}
-    {% endfor %}
-  </u>
-  <p>
-    <hr />
-    <a href="/">Etusivulle</a>
-  </p>
-</body>
-</html>
+    {% else %}
+      Käyttäjä on tehnyt {{ point.total }} vaihtokaupat.
+    {% endif %}
+    <br />
+  {% endfor %}
+</p>
+
+<h3>Avoimet vaihtokaupat</h3>
+
+<u>
+  {% for ask in asks %}
+    {% if ask.status == 1 %}
+      <li><a href="/ask/{{ ask.id }}">{{ ask.title }}</a></li>
+    {% endif %}
+  {% endfor %}
+</u>
+{% endblock %}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+  <h1>Tee laina- tai vaihtokauppoja täällä näin!</h1>
+  
+    {% if session.user_id %}
+    <p>
+        Olet kirjautunut käyttäjänimellä {{ session.username }}
+    </p>
+    {% endif %}
+
+  <p>
+    <a href="/">Etusivulle</a> |
+    {% if session.user_id %}
+    <a href="/user/{{ session.user_id }}">Oma profiili</a> |
+    <a href="/logout">Kirjaudu ulos</a> |
+    <a href="/search">Haku</a> 
+    {% else %}
+    <a href="/register">Luo tunnus</a> |
+    <a href="/login">Kirjaudu sisään</a> |
+    <a href="/search">Haku</a>
+    {% endif %}
+  </p>
+  <hr />
+  {% block content %}{% endblock %}
+</body>
+
+</html>

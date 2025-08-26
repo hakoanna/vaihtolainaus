@@ -1,48 +1,23 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Vaihtolainaus</title>
-</head>
+{% block title %}Vaihtolainaus{% endblock %}
 
-<body>
-  <h1>Solmi laina- tai vaihtokauppoja täällä näin!</h1>
-  
-  <p>
-    {% if session.user_id %}
-    <a href="/user/{{ session.user_id }}">Oma profiili</a> |
-    <a href="/logout">Kirjaudu ulos</a> |
-    <a href="/search">Haku</a> 
-    <hr />
-    Tervetuloa {{ session.username }} 
-    <br />
-    (ID-numero: {{ session.user_id  }})
-    {% else %}
-    <a href="/register">Luo tunnus</a> |
-    <a href="/login">Kirjaudu sisään</a> |
-    <a href="/search">Haku</a>
-    {% endif %}
-    <hr />
-  </p>
-
-  <h2>
-    <a href="/trade">Vaihtokaupat</a>
-    <br />
-  </h2>
-  <p>
-    {% if info.total == 1 %}
-    {{ info.total }} avoin vaihto
-    {% else %}
-    {{ info.total }} avointa vaihtoa
-    {% endif %}
-    <br />
-    Uusin: {{ info.last }}
-  </p>
-  <hr />
-  <h2>
-    <a href="/borrow">Lainakaupat</a>
-  </h2>
-
-</body>
-
-</html>
+{% block content%}
+<h2>
+  <a href="/trade">Vaihtokaupat</a>
+  <br />
+</h2>
+<p>
+  {% if info.total == 1 %}
+  {{ info.total }} avoin vaihto
+  {% else %}
+  {{ info.total }} avointa vaihtoa
+  {% endif %}
+  <br />
+   Uusin: {{ info.last }}
+</p>
+<hr />
+<h2>
+  <a href="/borrow">Lainakaupat</a>
+</h2>
+{% endblock %}

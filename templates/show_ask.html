@@ -1,71 +1,77 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>{{ ask.title }}</title>
-</head>
+{% block title %}{{ ask.title }}{% endblock %}
 
-<body>
-  <h1>{{ ask.title }}</h1>
-    <p>
-      Ehdottaja: <a href="/user/{{ ask.user_id }}">{{ ask.username }}</a> |
-      Klo: {{ ask.sent_at }}
-      <br />
+{% block content%}
+<h2>{{ ask.title }}</h2>
+
+<p>
+  Ehdottaja: <a href="/user/{{ ask.user_id }}">{{ ask.username }}</a> |
+  Klo: {{ ask.sent_at }}
+  <br />
   {% if ask.user_id == session.user_id %}
-      <a href="/edit_ask/{{ ask.id }}">Muokkaa</a> |
-      <a href="/remove_ask/{{ ask.id }}">Poista</a>
-    </p>
+    <a href="/edit_ask/{{ ask.id }}">Muokkaa</a> |
+    <a href="/remove_ask/{{ ask.id }}">Poista</a>
   {% endif %}
   <hr />
-  <p>
-    <h2>Tiedot</h2>
-    {% for class in classes %}
-    {{ class.value }} |
-    {% endfor %}
-  </p>
-  <p>
-    {{ ask.content | show_lines }}
-  </p>
-  {% if ask.status == 1 %}
-    <form action="/close_ask/{{ ask.id }}" method="post">
+</p>
+
+<h2>Tiedot</h2>
+
+<p>
+  {% for class in classes %}
+  {{ class.value }} |
+  {% endfor %}
+</p>
+
+<p>
+  {{ ask.content | show_lines }}
+</p>
+
+{% if ask.status == 1 %}
+  <form action="/close_ask/{{ ask.id }}" method="post">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+    <input type="submit" value="Sulje" />
+    <input type="hidden" name="ask_id" value="{{ ask.id }}"/>
+  </form>
+{% endif %}
+<hr />
+
+<h3>Vastaukset</h3>
+
+{% for reply in replies %}
+  <a href="/user/{{ reply.user_id }}">{{ reply.username }}</a>:
+  <br />
+  {{ reply.content | show_lines }}
+  <br />
+  {% if session.user_id == reply.user_id %}
+    <form action="/remove_reply/{{ reply.id }}" method="post">
       <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-      <input type="submit" value="Sulje" />
+      <input type="submit" name="remove_reply" value="Poista" />
       <input type="hidden" name="ask_id" value="{{ ask.id }}"/>
     </form>
   {% endif %}
+{% endfor%}
+
+{% if ask.status == 1 %}
+{% if session.username %}
+<hr />
+<h4>Uusi vastaus</h4>
+
+<form action="/create_reply" method="post">
+  Vastaus: <br />
+  <textarea name="content" rows="4" cols="40" maxlength="1000" required></textarea>
+  <br />
+  <input type="hidden" name="ask_id" value="{{ ask.id }}">
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+  <input type="submit" value="Julkaise vastaus" />
+</form>
+{% endif %}
+{% endif %}
+
+<p>
   <hr />
-  <h3>Vastaukset</h3>
-  {% for reply in replies %}
-    <a href="/user/{{ reply.user_id }}">{{ reply.username }}</a>:
-    <br />
-    {{ reply.content | show_lines }}
-    <br />
-    {% if session.user_id == reply.user_id %}
-      <form action="/remove_reply/{{ reply.id }}" method="post">
-        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-        <input type="submit" name="remove_reply" value="Poista" />
-        <input type="hidden" name="ask_id" value="{{ ask.id }}"/>
-      </form>
-    {% endif %}
-  {% endfor%}
-  {% if ask.status == 1 %}
-  {% if session.username %}
-  <hr />
-  <h4>Uusi vastaus</h4>
-  <form action="/create_reply" method="post">
-    Vastaus: <br />
-    <textarea name="content" rows="4" cols="40" maxlength="1000" required></textarea>
-    <br />
-    <input type="hidden" name="ask_id" value="{{ ask.id }}">
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-    <input type="submit" value="Julkaise vastaus" />
-  </form>
-  {% endif %}
-  {% endif %}
-  <p>
-    <hr />
-    <a href="/trade">Takaisin</a> |
-    <a href="/">Etusivulle</a>
-  </p>
-</body>
-</html>
+  <a href="/trade">Takaisin</a> |
+  <a href="/">Etusivulle</a>
+</p>
+{% endblock %}
