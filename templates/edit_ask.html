@@ -1,27 +1,24 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Ehdotuksen muokkaus</title>
-</head>
+{% block title %}Ehdotuksen muokkaus{% endblock %}
 
-<body>
-  <h1>Ehdotuksen muokkaus</h1>
+{% block content%}
+<h2>Ehdotuksen muokkaus</h2>
 
-  <form action="/edit_ask/{{ ask.id }}" method="post">
-    <p>
-      Otsikko:<br />
-      <input type="text" name="title" value="{{ ask.title }}" maxlength="100" required/>
-    </p>
-    <p>
-      Ehdotus:<br />
-      <textarea name="content" rows="5" cols="40" maxlength="1000" required>{{ ask.content }}</textarea>
-    </p>
-    {% for class in all_classes %}
-    <p>
-      {{ class }}:
-      <select name="classes">
-        <option value="">(valitse)</option>
+<form action="/edit_ask/{{ ask.id }}" method="post">
+  <p>
+    Otsikko:<br />
+    <input type="text" name="title" value="{{ ask.title }}" maxlength="100" required/>
+  </p>
+  <p>
+    Ehdotus:<br />
+    <textarea name="content" rows="5" cols="40" maxlength="1000" required>{{ ask.content }}</textarea>
+  </p>
+  {% for class in all_classes %}
+  <p>
+    {{ class }}:
+    <select name="classes">
+      <option value="">(valitse)</option>
       {% for option in all_classes[class] %}
         {% if classes[class] == option %}
           <option value="{{ class }}:{{ option }}" selected>{{ option }}</option>
@@ -29,13 +26,11 @@
           <option value="{{ class }}:{{ option }}">{{ option }}</option>
         {% endif %}
       {% endfor %}
-      </select>
-    </p>
-    {% endfor %}
-    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-    <input type="submit" value="Lähetä muutokset" />
-    <input type="hidden" name="ask_id" value="{{ ask.id }}"/>
-  </form>
-</body>
-
-</html>
+    </select>
+  </p>
+  {% endfor %}
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+  <input type="submit" value="Lähetä muutokset" />
+  <input type="hidden" name="ask_id" value="{{ ask.id }}"/>
+</form>
+{% endblock %}

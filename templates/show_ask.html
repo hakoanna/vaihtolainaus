@@ -29,11 +29,13 @@
 </p>
 
 {% if ask.status == 1 %}
+{% if ask.user_id == session.user_id %}
   <form action="/close_ask/{{ ask.id }}" method="post">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
     <input type="submit" value="Sulje" />
     <input type="hidden" name="ask_id" value="{{ ask.id }}"/>
   </form>
+{% endif %}
 {% endif %}
 <hr />
 

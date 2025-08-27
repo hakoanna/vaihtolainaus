@@ -1,24 +1,23 @@
-<!DOCTYPE html>
-<html>
+{% extends "layout.html" %}
 
-<head>
-  <title>Lainaa</title>
-</head>
+{% block title %}Lainakaupat{% endblock %}
 
-<body>
-  <h1>Lainauspyynnöt</h1>
-  <br />
-  <h2>Uusi ehdotus</h2>
-  <form action="/create_ask" method="post">
-    <p>
-      Otsikko: <br />
-      <input type="text" name="title" />
-    </p>
-    <p>
-        Kuvaus: <br />
-        <textarea rows="8" cols="60"></textarea>
-    </p>
-    <input type="submit" value="Luo ehdotus" />
-  </form>
-</body>
-</html>
+{% block content%}
+<h2>Lainauspyynnöt</h2>
+
+<br />
+
+<h2>Uusi ehdotus</h2>
+
+<form action="/create_ask" method="post">
+  <p>
+    Otsikko: <br />
+    <input type="text" name="title" />
+  </p>
+  <p>
+      Kuvaus: <br />
+      <textarea rows="8" cols="60"></textarea>
+  </p>
+  <input type="submit" value="Luo ehdotus" />
+</form>
+{% endblock %}
