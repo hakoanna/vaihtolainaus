@@ -6,24 +6,17 @@
 </head>
 
 <body>
-  <h1>Tee laina- tai vaihtokauppoja täällä näin!</h1>
-  
-    {% if session.user_id %}
-    <p>
-        Olet kirjautunut käyttäjänimellä {{ session.username }}
-    </p>
-    {% endif %}
+  <h1>Vaihtolainaus</h1>
 
   <p>
-    <a href="/">Etusivulle</a> |
+    <a href="/">Etusivu</a> |
+    <a href="/search">Haku</a> |
     {% if session.user_id %}
-    <a href="/user/{{ session.user_id }}">Oma profiili</a> |
-    <a href="/logout">Kirjaudu ulos</a> |
-    <a href="/search">Haku</a> 
+    <a href="/user/{{ session.user_id }}">Oma profiili ({{ session.username }})</a> |
+    <a href="/logout">Kirjaudu ulos</a>
     {% else %}
     <a href="/register">Luo tunnus</a> |
     <a href="/login">Kirjaudu sisään</a> |
-    <a href="/search">Haku</a>
     {% endif %}
   </p>
   <hr />
