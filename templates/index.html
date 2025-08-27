@@ -7,17 +7,29 @@
   <a href="/trade">Vaihtokaupat</a>
   <br />
 </h2>
+
 <p>
-  {% if info.total == 1 %}
-  {{ info.total }} avoin vaihto
+  {% if trade_info.total == 1 %}
+  {{ trade_info.total }} avoin vaihto
   {% else %}
-  {{ info.total }} avointa vaihtoa
+  {{ trade_info.total }} avointa vaihtoa
   {% endif %}
   <br />
-   Uusin: {{ info.last }}
+   Uusin: {{ trade_info.last }}
 </p>
 <hr />
+
 <h2>
   <a href="/borrow">Lainakaupat</a>
 </h2>
+
+<p>
+  {% if borrow_info.total == 1 %}
+  {{ borrow_info.total }} avoin lainaus
+  {% else %}
+  {{ borrow_info.total }} avointa lainausta
+  {% endif %}
+  <br />
+   Uusin: {{ borrow_info.last }}
+</p>
 {% endblock %}

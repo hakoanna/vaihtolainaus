@@ -28,8 +28,9 @@ def require_login():
 
 @app.route("/")
 def index():
-    info = asks.get_trade_asks_info()
-    return render_template("index.html", info=info)
+    trade_info = asks.get_trade_asks_info()
+    borrow_info = asks.get_borrow_asks_info()
+    return render_template("index.html", trade_info=trade_info, borrow_info=borrow_info)
 
 @app.route("/user/<int:user_id>")
 def show_user(user_id):
