@@ -11,7 +11,8 @@ CREATE TABLE asks (
     content TEXT,
     sent_at TEXT,
     user_id INTEGER REFERENCES users,
-    status INTEGER
+    status INTEGER,
+    type TEXT
 );
 
 CREATE TABLE classes (

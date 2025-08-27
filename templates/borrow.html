@@ -1,23 +1,60 @@
 {% extends "layout.html" %}
 
-{% block title %}Lainakaupat{% endblock %}
+{% block title %}Vaihtokaupat{% endblock %}
 
 {% block content%}
-<h2>Lainauspyynnöt</h2>
+<h2>Lainausehdotukset</h2>
 
+{% for ask in asks %}
+<p>
+  <a href="/ask/{{ ask.id }}">{{ ask.title }}</a>
+  <br />
+  {% if ask.status == 1 %}
+  Auki | {{ ask.sent_at }}
+  {% elif ask.status == 0 %}
+  Kiinni | {{ ask.sent_at }}
+  {% endif %}
+</p>
+<hr />
+{% endfor %}
 <br />
 
+{% if session.username %}
 <h2>Uusi ehdotus</h2>
 
 <form action="/create_ask" method="post">
   <p>
-    Otsikko: <br />
-    <input type="text" name="title" />
+    Ehdotus: <br />
+    <input type="text" name="title" maxlength="100" required />
   </p>
+
+  {% for class in classes %}
   <p>
-      Kuvaus: <br />
-      <textarea rows="8" cols="60"></textarea>
+    {% if class == "Tyyppi" %}
+      {% for option in classes[class] %}
+        <input type="radio" name="type" value="{{ class }}:{{ option }}" /> {{ option }}
+      {% endfor %}
+    {% else %}
+      {{ class }}:
+      <select name="classes">
+        <option value="">(valitse)</option>
+        {% for option in classes[class] %}
+          <option value="{{ class }}:{{ option }}">{{ option }}</option>
+        {% endfor %}
+      </select>
+    {% endif %}
   </p>
-  <input type="submit" value="Luo ehdotus" />
+  {% endfor %}
+
+  <p>
+    Lisätiedot:
+    <br />
+    <textarea name="content" rows="8" cols="60" maxlength="1000" required></textarea>
+  </p>
+
+  <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
+  <input type="hidden" name="type" value="TRADE" />
+  <input type="submit" value="Julkaise ehdotus" />
 </form>
+{% endif %}
 {% endblock %}

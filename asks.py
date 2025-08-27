@@ -16,9 +16,9 @@ def get_classes(ask_id):
     sql = "SELECT title, value FROM ask_classes WHERE ask_id = ?"
     return db.query(sql, [ask_id])
 
-def add_ask(title, content, user_id, classes):
-    sql = """INSERT INTO asks (title, content, sent_at, user_id, status)
-            VALUES (?, ?, datetime('now'), ?, 1)"""
+def add_trade_ask(title, content, user_id, classes):
+    sql = """INSERT INTO asks (title, content, sent_at, user_id, status, type)
+            VALUES (?, ?, datetime('now'), ?, 1, 'A')"""
     db.execute(sql, [title, content, user_id])
 
     ask_id = db.last_insert_id()
@@ -27,11 +27,11 @@ def add_ask(title, content, user_id, classes):
     for title, value in classes:
         db.execute(sql, [ask_id, title, value])
 
-def get_asks_info():
-    sql = "SELECT COUNT(a.id) total, MAX(a.sent_at) last FROM asks a WHERE a.status=1"
+def get_trade_asks_info():
+    sql = "SELECT COUNT(a.id) total, MAX(a.sent_at) last FROM asks a WHERE a.status=1 AND a.type='A'"
     return db.query(sql)[0]
 
-def get_asks():
+def get_trade_asks():
     sql = """SELECT a.id,
                     a.title,
                     a.user_id,
@@ -39,12 +39,12 @@ def get_asks():
                     u.username,
                     a.status
             FROM asks a, users u
-            WHERE a.user_id = u.id
+            WHERE a.user_id = u.id AND a.type='A'
             GROUP BY a.id
             ORDER BY a.id DESC"""
     return db.query(sql)
 
-def get_ask(ask_id):
+def get_trade_ask(ask_id):
     sql = """SELECT a.id,
                     a.title,
                     a.content,
@@ -54,7 +54,7 @@ def get_ask(ask_id):
                     u.id user_id,
                     u.username
                 FROM asks a, users u
-                WHERE a.user_id = u.id AND
+                WHERE a.user_id = u.id AND a.type='A' AND
                     a.id = ?"""
     result = db.query(sql, [ask_id])
     return result[0] if result else None
