@@ -44,7 +44,7 @@ def get_trade_asks():
             ORDER BY a.id DESC"""
     return db.query(sql)
 
-def get_trade_ask(ask_id):
+def get_ask(ask_id):
     sql = """SELECT a.id,
                     a.title,
                     a.content,
@@ -54,10 +54,38 @@ def get_trade_ask(ask_id):
                     u.id user_id,
                     u.username
                 FROM asks a, users u
-                WHERE a.user_id = u.id AND a.type='A' AND
+                WHERE a.user_id = u.id AND
                     a.id = ?"""
     result = db.query(sql, [ask_id])
     return result[0] if result else None
+
+def add_borrow_ask(title, content, user_id, classes):
+    sql = """INSERT INTO asks (title, content, sent_at, user_id, status, type)
+            VALUES (?, ?, datetime('now'), ?, 1, 'B')"""
+    db.execute(sql, [title, content, user_id])
+
+    ask_id = db.last_insert_id()
+
+    sql = "INSERT INTO ask_classes (ask_id, title, value) VALUES (?, ?, ?)"
+    for title, value in classes:
+        db.execute(sql, [ask_id, title, value])
+
+def get_borrow_asks_info():
+    sql = "SELECT COUNT(a.id) total, MAX(a.sent_at) last FROM asks a WHERE a.status=1 AND a.type='B'"
+    return db.query(sql)[0]
+
+def get_borrow_asks():
+    sql = """SELECT a.id,
+                    a.title,
+                    a.user_id,
+                    a.sent_at,
+                    u.username,
+                    a.status
+            FROM asks a, users u
+            WHERE a.user_id = u.id AND a.type='B'
+            GROUP BY a.id
+            ORDER BY a.id DESC"""
+    return db.query(sql)
 
 def update_ask(ask_id, title, content, classes):
     sql = """UPDATE asks SET

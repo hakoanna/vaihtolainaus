@@ -133,7 +133,7 @@ def trade():
 
 @app.route("/ask/<int:ask_id>")
 def show_ask(ask_id):
-    ask = asks.get_trade_ask(ask_id)
+    ask = asks.get_ask(ask_id)
     if not ask:
         abort(404)
     classes = asks.get_classes(ask_id)
@@ -174,7 +174,7 @@ def create_ask():
 
     if request.form["ask_type"] == "trade":
         asks.add_trade_ask(title, content, user_id, classes)
-    if request.form["type"] == "BORROW":
+    if request.form["ask_type"] == "borrow":
         asks.add_borrow_ask(title, content, user_id, classes)
 
     return redirect("/")
@@ -182,7 +182,7 @@ def create_ask():
 @app.route("/edit_ask/<int:ask_id>", methods=["GET", "POST"])
 def edit_ask(ask_id):
     require_login()
-    ask = asks.get_trade_ask(ask_id)
+    ask = asks.get_ask(ask_id)
     if not ask:
         abort(404)
     if ask["user_id"] != session["user_id"]:
@@ -203,7 +203,7 @@ def edit_ask(ask_id):
         check_csrf()
         require_login()
         ask_id = request.form["ask_id"]
-        ask = asks.get_trade_ask(ask_id)
+        ask = asks.get_ask(ask_id)
         if not ask:
             abort(404)
         if ask["user_id"] != session["user_id"]:
@@ -231,7 +231,7 @@ def edit_ask(ask_id):
 @app.route("/remove_ask/<int:ask_id>", methods=["GET", "POST"])
 def remove_ask(ask_id):
     require_login()
-    ask = asks.get_trade_ask(ask_id)
+    ask = asks.get_ask(ask_id)
     if not ask:
             abort(404)
     if ask["user_id"] != session["user_id"]:
@@ -244,7 +244,7 @@ def remove_ask(ask_id):
         check_csrf()
         require_login()
         ask_id = request.form["ask_id"]
-        ask = asks.get_trade_ask(ask_id)
+        ask = asks.get_ask(ask_id)
         if ask["user_id"] != session["user_id"]:
             abort(403)
         if "continue" in request.form:
@@ -256,7 +256,7 @@ def close_ask(ask_id):
     check_csrf()
     require_login()
     ask_id = request.form["ask_id"]
-    ask = asks.get_trade_ask(ask_id)
+    ask = asks.get_ask(ask_id)
     if not ask:
         abort(404)
     if ask["user_id"] != session["user_id"]:
@@ -272,7 +272,7 @@ def create_reply():
     if not content or len(content) > 1000:
         abort(403)
     ask_id = request.form["ask_id"]
-    ask = asks.get_trade_ask(ask_id)
+    ask = asks.get_ask(ask_id)
     if not ask:
         abort(403)
     user_id = session["user_id"]
@@ -296,4 +296,6 @@ def remove_reply(reply_id):
 
 @app.route("/borrow")
 def borrow():
-    return render_template("borrow.html")
+    all_asks = asks.get_borrow_asks()
+    classes = asks.get_all_classes()
+    return render_template("borrow.html", asks=all_asks, classes=classes)
