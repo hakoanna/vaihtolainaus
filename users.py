@@ -13,6 +13,7 @@ def get_asks(user_id):
     return db.query(sql, [user_id])
 
 def create_user(username, password):
+    print("menee luontiin users.py")
     password_hash = generate_password_hash(password)
     sql = "INSERT INTO users (username, password_hash) VALUES (?, ?)"
     db.execute(sql, [username, password_hash])

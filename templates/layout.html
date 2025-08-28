@@ -8,6 +8,12 @@
 <body>
   <h1>Vaihtolainaus</h1>
 
+  {% for message in get_flashed_messages() %}
+  <p>
+    <b>{{ message }}</b>
+  </p>
+  {% endfor %}
+  
   <p>
     <a href="/">Etusivu</a> |
     <a href="/search">Haku</a> |

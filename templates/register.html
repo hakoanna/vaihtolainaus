@@ -3,10 +3,17 @@
 {% block title %}Rekisteröityminen{% endblock %}
 
 {% block content%}
-<form action="/create" method="post">
+
+{% for message in get_flashed_messages() %}
+<p>
+  <b>{{ message }}</b>
+</p>
+{% endfor %}
+
+<form action="/register" method="post">
   <p>
     Tunnus: <br />
-    <input type="text" name="username" />
+    <input type="text" name="username" value="{{ filled.username }}" maxlength="16" required/>
   </p>
   <p>
     Salasana: <br />

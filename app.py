@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import abort, flash, make_response, redirect, render_template, request, session
-import secrets
+import secrets, sqlite3
 import config
 import db
 import asks
@@ -85,24 +85,31 @@ def search():
         results = ""
     return render_template("search.html", query=query, results=results)
 
-@app.route("/register")
+@app.route("/register", methods=["GET", "POST"])
 def register():
-    return render_template("register.html")
+    if request.method == "GET":
+        return render_template("register.html", filled={})
 
-@app.route("/create", methods=["POST"])
-def create():
-    username = request.form["username"]
-    password1 = request.form["password1"]
-    password2 = request.form["password2"]
-    if password1 != password2:
-        return "VIRHE: salasanat eivät ole samat"
+    if request.method == "POST":
+        username = request.form["username"]
+        if len(username) > 16:
+            abort(403)
+        password1 = request.form["password1"]
+        password2 = request.form["password2"]
 
-    try:
-        users.create_user(username, password1)
-    except:
-        return "VIRHE: tunnus on jo varattu"
+        if password1 != password2:
+            flash("VIRHE: Antamasi salasanat eivät ole samat")
+            filled = {"username": username}
+            return render_template("register.html", filled=filled)
 
-    return "Tunnus luotu"
+        try:
+            users.create_user(username, password1)
+            flash("Tunnuksen luominen onnistui, voit nyt kirjautua sisään")
+            return redirect("/")
+        except sqlite3.IntegrityError:
+            flash("VIRHE: Valitsemasi tunnus on jo varattu")
+            filled = {"username": username}
+            return render_template("register.html", filled=filled)
 
 
 @app.route("/login", methods=["GET", "POST"])
