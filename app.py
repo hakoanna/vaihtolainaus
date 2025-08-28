@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import abort, make_response, redirect, render_template, request, session
+from flask import abort, flash, make_response, redirect, render_template, request, session
 import secrets
 import config
 import db
@@ -52,14 +52,17 @@ def add_profile_image():
         check_csrf()
         file = request.files["image"]
         if not file.filename.endswith(".jpg"):
-            return "VIRHE: väärä tiedostomuoto"
+            flash("VIRHE: Lähettämäsi tiedosto on liian suuri")
+            return redirect("/add_profile_image")
 
         image = file.read()
         if len(image) > 100 * 1024:
-            return "VIRHE: liian suuri kuva"
+            flash("VIRHE: Lähettämäsi tiedosto on liian suuri")
+            return redirect("/add_profile_image")
 
         user_id = session["user_id"]
         users.update_image(user_id, image)
+        flash("Kuvan lisääminen onnistui")
         return redirect("/user/" + str(user_id))
 
 @app.route("/image/<int:user_id>")

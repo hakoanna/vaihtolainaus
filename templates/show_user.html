@@ -5,6 +5,12 @@
 {% block content%}
 <h2>{{ user.username }}</h2>
 
+{% for message in get_flashed_messages() %}
+<p>
+  <b>{{ message }}</b>
+</p>
+{% endfor %}
+
 <p>
   {% if user.has_image %}
   <img class="shrinkToFit" src="/image/{{ user.id }}" width="150" height="150"/>
