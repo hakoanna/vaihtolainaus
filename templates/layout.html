@@ -3,30 +3,41 @@
 
 <head>
   <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="/static/main.css">
 </head>
 
 <body>
-  <h1>Vaihtolainaus</h1>
+  <div class="header">
+    <h1>Vaihtolainaus</h1>
+  </div>
 
   {% for message in get_flashed_messages() %}
+  <div class="info">
   <p>
     <b>{{ message }}</b>
   </p>
+  </div>
   {% endfor %}
   
-  <p>
-    <a href="/">Etusivu</a> |
-    <a href="/search">Haku</a> |
-    {% if session.user_id %}
-    <a href="/user/{{ session.user_id }}">Oma profiili ({{ session.username }})</a> |
-    <a href="/logout">Kirjaudu ulos</a>
-    {% else %}
-    <a href="/register">Luo tunnus</a> |
-    <a href="/login">Kirjaudu sisään</a> |
-    {% endif %}
-  </p>
-  <hr />
+  <div class="nav">
+    <nav>
+      <ul>
+        <li><a href="/">Etusivu</a></li>
+        <li><a href="/search">Haku</a></li>
+        {% if session.user_id %}
+        <li><a href="/user/{{ session.user_id }}">Oma profiili ({{ session.username }})</a></li>
+        <li><a href="/logout">Kirjaudu ulos</a></li>
+        {% else %}
+        <li><a href="/register">Luo tunnus</a></li>
+        <li><a href="/login">Kirjaudu sisään</a></li>
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
+
+  <div class="content">
   {% block content %}{% endblock %}
+  </div>
 </body>
 
 </html>

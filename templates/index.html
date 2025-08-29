@@ -3,10 +3,11 @@
 {% block title %}Vaihtolainaus{% endblock %}
 
 {% block content%}
-<h2>
+<div class="index_asks">
+<h3>
   <a href="/trade">Vaihtokaupat</a>
   <br />
-</h2>
+</h3>
 
 <p>
   {% if trade_info.total == 1 %}
@@ -15,13 +16,14 @@
   {{ trade_info.total }} avointa vaihtoa
   {% endif %}
   <br />
-   Uusin: {{ trade_info.last }}
+   uusin: {{ trade_info.last }}
 </p>
-<hr />
+</div>
 
-<h2>
+<div class="index_asks">
+<h3>
   <a href="/borrow">Lainakaupat</a>
-</h2>
+</h3>
 
 <p>
   {% if borrow_info.total == 1 %}
@@ -30,6 +32,7 @@
   {{ borrow_info.total }} avointa lainausta
   {% endif %}
   <br />
-   Uusin: {{ borrow_info.last }}
+   uusin: {{ borrow_info.last }}
 </p>
+</div>
 {% endblock %}

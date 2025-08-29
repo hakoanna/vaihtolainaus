@@ -1,0 +1,59 @@
+body {
+  margin: auto;
+  max-width: 50em;
+  font-family: sans-serif;
+  background-color: rgb(199, 192, 216);
+}
+
+.header {
+    text-align: center;
+    color: white;
+    padding: 1em;
+    margin: 0.5em 0;
+}
+
+.nav {
+  background-color:  rgb(229, 226, 240);
+  padding: 0.5em;
+  margin: 0.5em 0;
+}
+
+nav {
+  text-align: center;
+}
+
+nav ul {
+  padding: 0;
+  margin: 0;
+}
+
+nav li {
+  display: inline-block;
+  padding: 0 1em;
+  margin: 0;
+}
+
+nav li:not(:last-of-type) {
+  border-right: 1px solid white;
+}
+
+
+.content {
+    background-color: white;
+    padding: 1em;
+    margin: 0.5em 0;
+}
+
+.info {
+  border: 2px solid white;
+  margin: 0.5em;
+  padding: 1em;
+  background-color: rgb(177, 197, 235);
+  color: white;
+}
+
+.index_asks {
+    border: 5px solid rgb(194, 168, 202);
+    margin: 1em;
+    padding: 1em 2.5em;
+}
