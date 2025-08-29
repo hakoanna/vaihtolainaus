@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 
-{% block title %}Vaihtokaupat{% endblock %}
+{% block title %}Lainakaupat{% endblock %}
 
 {% block content%}
-<h2>Ehdotukset</h2>
+<h2>Lainaehdotukset</h2>
 
 {% for ask in asks %}
 <p>
@@ -56,5 +56,9 @@
   <input type="hidden" name="ask_type" value="borrow" />
   <input type="submit" value="Julkaise ehdotus" />
 </form>
+{% else %}
+<p>
+  Jos haluat tehdä oman ehdotuksen, <a href="/login">kirjaudu sisään</a>.
+</p>
 {% endif %}
 {% endblock %}
