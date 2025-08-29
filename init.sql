@@ -6,7 +6,7 @@ INSERT INTO classes (title, value) VALUES ('Tyyppi', 'Tarjoaa');
 INSERT INTO classes (title, value) VALUES ('Luokka', 'Vaatteet');
 INSERT INTO classes (title, value) VALUES ('Luokka', 'Astiat');
 INSERT INTO classes (title, value) VALUES ('Luokka', 'Elintarvikkeet');
-INSERT INTO classes (title, value) VALUES ('Luokka', 'Teknologia');
+INSERT INTO classes (title, value) VALUES ('Luokka', 'Elektroniikka');
 INSERT INTO classes (title, value) VALUES ('Luokka', 'Työkalut');
 INSERT INTO classes (title, value) VALUES ('Luokka', 'Kirjat');
 INSERT INTO classes (title, value) VALUES ('Luokka', 'Sisustus');
