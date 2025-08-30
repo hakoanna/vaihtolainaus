@@ -1,15 +1,16 @@
 body {
   margin: auto;
   max-width: 50em;
-  font-family: sans-serif;
-  background-color: rgb(199, 192, 216);
+  font-family: Helvetica, sans-serif;
+  background-color: rgb(192, 216, 195);
 }
 
 .header {
     text-align: center;
     color: white;
-    padding: 1em;
-    margin: 0.5em 0;
+    padding: 0.5em;
+    margin: 0 0;
+    font-size: 20px;
 }
 
 .nav {
@@ -56,4 +57,27 @@ nav li:not(:last-of-type) {
     border: 5px solid rgb(194, 168, 202);
     margin: 1em;
     padding: 1em 2.5em;
+}
+
+.ask {
+    background-color: rgb(247, 248, 252);
+    border: 5px solid rgb(136, 161, 147);
+    margin: 2em;
+    padding: 1em 1.5em;
+}
+
+h2 {
+    text-align: center;
+    background-color: rgb(223, 229, 248);
+    color: rgb(70, 65, 97);
+    margin: 1em;
+    padding: 1em 1em;
+    font-size: 21px;
+}
+
+.new_ask {
+    background-color: rgb(242, 243, 252);
+    border: 5px solid rgb(111, 120, 170);
+    margin: 2em;
+    padding: 1em 1.5em;
 }

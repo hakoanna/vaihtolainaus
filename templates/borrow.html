@@ -6,6 +6,7 @@
 <h2>Lainaehdotukset</h2>
 
 {% for ask in asks %}
+<div class="ask">
 <p>
   <a href="/ask/{{ ask.id }}">{{ ask.title }}</a>
   <br />
@@ -15,11 +16,12 @@
   Kiinni | {{ ask.sent_at }}
   {% endif %}
 </p>
-<hr />
+</div>
 {% endfor %}
 <br />
 
 {% if session.username %}
+<div class="new_ask">
 <h4>Uusi ehdotus</h4>
 
 <form action="/create_ask" method="post">
@@ -60,5 +62,6 @@
 <p>
   Jos haluat tehdä oman ehdotuksen, <a href="/login">kirjaudu sisään</a>.
 </p>
+</div>
 {% endif %}
 {% endblock %}
