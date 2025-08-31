@@ -17,7 +17,7 @@ How to test program:
 2. in terminal: cd (your folder location)
 3. in terminal: python3 -m venv venv
 4. in terminal: source venv/bin/activate
-5. in terminal: pip install flask (if you don't already have it installed)
+5. in terminal: pip install flask
 6. in terminal: sqlite3 database.db
 7. paste schema.sql from github to terminal
 8. paste init.sql from github to terminal
