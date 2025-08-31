@@ -1,5 +1,3 @@
-DELETE FROM classes;
-
 INSERT INTO classes (title, value) VALUES ('Tyyppi', 'Etsii');
 INSERT INTO classes (title, value) VALUES ('Tyyppi', 'Tarjoaa');
 
