@@ -48,8 +48,8 @@ nav li:not(:last-of-type) {
 .info {
   border: 2px solid white;
   margin: 0.5em;
-  padding: 1em;
-  background-color: rgb(177, 197, 235);
+  padding: 0.5em;
+  background-color: rgb(141, 162, 199);
   color: white;
 }
 
@@ -69,7 +69,7 @@ nav li:not(:last-of-type) {
 h2 {
     text-align: center;
     background-color: rgb(223, 229, 248);
-    color: rgb(70, 65, 97);
+    color: black;
     margin: 1em;
     padding: 1em 1em;
     font-size: 21px;
@@ -80,4 +80,56 @@ h2 {
     border: 5px solid rgb(111, 120, 170);
     margin: 2em;
     padding: 1em 1.5em;
+}
+
+.ask_meta {
+  margin: 1em;
+  padding: 0.2em 0.7em;
+  color: rgb(100, 76, 109);
+  background-color: rgb(232, 229, 235);
+}
+
+.ask_info {
+  text-align: center;
+  margin-left: 8em;
+  margin-right: 8em;
+  padding: 0em;
+  background-color: rgb(217, 248, 217);
+}
+
+.ask_content {
+  margin: 1em;
+  padding: 1em 1em;
+}
+
+h3 {
+  text-align: center;
+  border: 5px solid rgb(223, 229, 248);
+  margin: 1em;
+  padding: 1em 1em;
+  font-size: 21px;
+}
+
+h4 {
+  margin: 1em;
+  padding: 1em, 1em;
+  font-size: 19px;
+}
+
+.reply {
+    border: 5px solid rgb(220, 199, 230);
+    margin-left: 1em;
+    margin-right: 10em;
+    padding: 1em 1em;
+}
+
+.new_reply {
+    background-color: rgb(245, 246, 255);
+    border: 5px solid rgb(174, 182, 228);
+    margin: 2em;
+    padding: 1em 1.5em;
+}
+
+h5 {
+  font-size: 16px;
 }
