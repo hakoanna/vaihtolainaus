@@ -3,8 +3,9 @@
 {% block title %}Ehdotuksen poisto{% endblock %}
 
 {% block content%}
-<h2>Ehdotuksen muokkaus</h2>
+<h2>Ehdotuksen poisto</h2>
 
+<div class="gen">
 <form action="/remove_ask/{{ ask.id }}" method="post">
   <p>
     Haluatko varmasti poistaa ehdotuksen?
@@ -14,4 +15,5 @@
   <input type="submit" name="cancel" value="Peruuta" />
   <input type="hidden" name="ask_id" value="{{ ask.id }}"/>
 </form>
+</div>
 {% endblock %}

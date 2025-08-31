@@ -5,6 +5,7 @@
 {% block content%}
 <h2>Ehdotuksen muokkaus</h2>
 
+<div class="gen">
 <form action="/edit_ask/{{ ask.id }}" method="post">
   <p>
     Otsikko:<br />
@@ -33,4 +34,5 @@
   <input type="submit" value="Lähetä muutokset" />
   <input type="hidden" name="ask_id" value="{{ ask.id }}"/>
 </form>
+</div>
 {% endblock %}

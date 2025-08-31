@@ -3,6 +3,7 @@
 {% block title %}Kirjautuminen{% endblock %}
 
 {% block content%}
+<div class="gen">
 {% if session.username %}
   <p>
     Olet kirjautunut nimellä {{ session.username }}
@@ -28,7 +29,8 @@
     {% endif %}
 
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
-    <input type="submit" value="Kirjaudu" />
+    <input type="submit" value="Kirjaudu sisään" />
   </form>
 {% endif %}
+</div>
 {% endblock %}

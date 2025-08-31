@@ -3,26 +3,31 @@
 {% block title %}Haku{% endblock %}
 
 {% block content%}
-<h2>Haku</h2>
+<h3>Haku</h3>
 
+<div class="search">
 <form action="/search" method="get">
   <p>
     Hakusana: <input type="text" name="query" value="{{ query }}">
   </p>
   <input type="submit" value="Lähetä">
 </form>
+</div>
 
 {% if query %}
-<h2>Tulokset</h2>
+<h4>Tulokset</h4>
 
 {% for ask in results %}
+<div class="s_result">
+{% if ask.type == 'A' %}
+Vaihto:
+{% else %}
+Lainaus:
+{% endif %}
   <a href="/ask/{{ ask.id }}">{{ ask.title }}</a>
   <br />
+</div>
 {% endfor %}
 {% endif %}
 
-<hr />
-<p>
-  <a href="/">Etusivulle</a>
-</p>
 {% endblock %}

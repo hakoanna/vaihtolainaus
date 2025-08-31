@@ -48,7 +48,7 @@ nav li:not(:last-of-type) {
 .info {
   border: 2px solid white;
   margin: 0.5em;
-  padding: 0.5em;
+  padding: 1em;
   background-color: rgb(141, 162, 199);
   color: white;
 }
@@ -132,4 +132,29 @@ h4 {
 
 h5 {
   font-size: 16px;
+}
+
+.search {
+  margin: 3em;
+}
+
+.s_result {
+    background-color: rgb(247, 248, 252);
+    border: 5px solid rgb(143, 168, 197);
+    margin-left: 2em;
+    margin-right: 2em;
+    margin-bottom: 0.1em;
+    padding: 1em 1.5em;
+}
+
+.gen {
+  margin: 2em;
+}
+
+.user_ask {
+  border: 5px solid rgb(143, 168, 197);
+  margin-left: 2em;
+  margin-bottom: 0.1em;
+  margin-right: 5em;
+  padding: 0.5em 0.5em;
 }

@@ -5,17 +5,12 @@
 {% block content%}
 <h2>Profiilikuva</h2>
 
+<div class="gen">
 <p>
   Lähetä jpg-tiedosto, jonka koko on enintään 100 kt
   <br />
   (Kannattaa myös olla neliö!)
 </p>
-
-{% for message in get_flashed_messages() %}
-<p>
-  <b>{{ message }}</b>
-</p>
-{% endfor %}
 
 <form action="/add_profile_image" method="post" enctype="multipart/form-data">
   <p>
@@ -24,4 +19,5 @@
   <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}" />
   <input type="submit" value="Lähetä" />
 </form>
+</div>
 {% endblock %}

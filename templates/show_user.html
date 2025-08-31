@@ -3,14 +3,9 @@
 {% block title %}{{ user.username }}{% endblock %}
 
 {% block content%}
-<h2>{{ user.username }}</h2>
+<h3>{{ user.username }}</h3>
 
-{% for message in get_flashed_messages() %}
-<p>
-  <b>{{ message }}</b>
-</p>
-{% endfor %}
-
+<div class="gen">
 <p>
   {% if user.has_image %}
   <img class="shrinkToFit" src="/image/{{ user.id }}" width="150" height="150"/>
@@ -29,24 +24,30 @@
   {% for point in data %}
     {% if point.status == 1 %}
       {% if point.total == 1 %}
-        Käyttäjällä on {{ point.total }} avoin vaihtokauppa.
+        Käyttäjällä on {{ point.total }} avoin kauppa.
       {% else %}
-        Käyttäjällä on {{ point.total }} avointa vaihtokauppaa.
+        Käyttäjällä on {{ point.total }} avointa kauppaa.
       {% endif %}
     {% else %}
-      Käyttäjä on tehnyt {{ point.total }} vaihtokaupat.
+      Käyttäjä on tehnyt {{ point.total }} kaupat.
     {% endif %}
     <br />
   {% endfor %}
 </p>
+</div>
+<h4>Avoimet kaupat</h4>
 
-<h3>Avoimet vaihtokaupat</h3>
 
-<u>
-  {% for ask in asks %}
-    {% if ask.status == 1 %}
-      <li><a href="/ask/{{ ask.id }}">{{ ask.title }}</a></li>
-    {% endif %}
-  {% endfor %}
-</u>
+{% for ask in asks %}
+{% if ask.status == 1 %}
+<div class="user_ask">
+  {% if ask.type == 'A' %}
+  Vaihto:
+  {% else %}
+  Lainaus:
+  {% endif %}
+  <a href="/ask/{{ ask.id }}">{{ ask.title }}</a>
+</div>
+{% endif %}
+{% endfor %}
 {% endblock %}

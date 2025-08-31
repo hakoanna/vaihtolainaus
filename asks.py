@@ -109,7 +109,7 @@ def remove_ask(ask_id):
     db.execute(sql, [ask_id])
 
 def search_asks(query):
-    sql = """SELECT a.id, a.title
+    sql = """SELECT a.id, a.title, a.type
             FROM asks a, ask_classes c
             WHERE (c.value LIKE ? AND a.id = c.ask_id) OR a.title LIKE ?
             GROUP BY a.id"""
